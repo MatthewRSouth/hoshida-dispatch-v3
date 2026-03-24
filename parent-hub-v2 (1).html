@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoshida Dispatch – Parent Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:   #FAEDCA;
+    --indigo:  #6C7DE2;
+    --terra:   #E18F64;
+    --cream-dark: #F0DCA8;
+    --cream-deeper: #E8CF90;
+    --indigo-light: #EEF0FC;
+    --indigo-dark:  #4A5BC4;
+    --terra-light:  #FAE8DC;
+    --terra-dark:   #C46F44;
+    --ink:     #2B2D42;
+    --muted:   #7A7D95;
+    --white:   #FFFDF7;
+    --r: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── PAGE WRAPPER ── */
+  .page {
+    max-width: 96vw;
+    margin: 0 auto;
+    padding: 48px 24px 72px;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    margin-bottom: 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .page-header-left h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.6rem;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .page-header-left h1 em {
+    font-style: italic;
+    color: var(--terra);
+  }
+
+  .page-header-left p {
+    margin-top: 8px;
+    font-size: 0.92rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--white);
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 50px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #5CBF7A;
+    box-shadow: 0 0 0 3px rgba(92,191,122,0.25);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(92,191,122,0.25); }
+    50% { box-shadow: 0 0 0 6px rgba(92,191,122,0.12); }
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* ── BASE MODULE ── */
+  .module {
+    background: var(--white);
+    border-radius: var(--r);
+    padding: 24px;
+    border: 1.5px solid var(--cream-dark);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .module:nth-child(1) { animation-delay: 0.05s; }
+  .module:nth-child(2) { animation-delay: 0.12s; }
+  .module:nth-child(3) { animation-delay: 0.19s; }
+  .module:nth-child(4) { animation-delay: 0.26s; }
+  .module:nth-child(5) { animation-delay: 0.33s; }
+  .module:nth-child(6) { animation-delay: 0.40s; }
+
+  .module-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .module-label::before {
+    content: '';
+    width: 18px; height: 2px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── ALERT MODULE (spans full width) ── */
+  .mod-alert {
+    grid-column: 1 / -1;
+    background: var(--terra);
+    border-color: var(--terra-dark);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+  }
+
+  .mod-alert .alert-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .mod-alert .alert-body { flex: 1; }
+
+  .mod-alert .alert-body strong {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 2px;
+  }
+
+  .mod-alert .alert-body span {
+    font-size: 0.8rem;
+    color: rgba(255,253,247,0.8);
+  }
+
+  .mod-alert .dismiss-btn {
+    background: rgba(255,253,247,0.2);
+    border: none;
+    color: var(--white);
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .mod-alert .dismiss-btn:hover { background: rgba(255,253,247,0.35); }
+
+  /* ── NEWS MODULE (spans 2 cols) ── */
+  .mod-news {
+    grid-column: 1 / 2;
+  }
+
+  .mod-news .module-label::before { background: var(--indigo); }
+
+  .news-list { display: flex; flex-direction: column; gap: 2px; }
+
+  .news-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--cream);
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0 -10px;
+  }
+
+  .news-item:last-child { border-bottom: none; }
+
+  .news-item:hover { background: var(--cream); }
+
+  .news-pip {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .pip-urgent { background: var(--terra); }
+  .pip-reminder { background: var(--indigo); }
+  .pip-info { background: var(--cream-deeper); }
+  .pip-update { background: #5CBF7A; }
+
+  .news-content { flex: 1; }
+
+  .news-content strong {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 3px;
+    line-height: 1.35;
+  }
+
+  .news-content span {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .news-date {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-weight: 500;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  /* ── SCHEDULE MODULE ── */
+  .mod-schedule {
+    grid-column: 2 / 3;
+  }
+
+  .mod-schedule .module-label::before { background: var(--terra); }
+
+  .week-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .week-range {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .nav-btn {
+    background: var(--cream);
+    border: 1.5px solid var(--cream-dark);
+    color: var(--ink);
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .nav-btn:hover {
+    background: var(--indigo);
+    border-color: var(--indigo);
+    color: #fff;
+  }
+
+  .day-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    margin-bottom: 16px;
+  }
+
+  .day-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 8px 4px 6px;
+    border-radius: 10px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    background: none;
+    transition: all 0.15s;
+  }
+
+  .day-btn:hover { background: var(--cream); border-color: var(--cream-dark); }
+
+  .day-btn.active {
+    background: var(--indigo);
+    border-color: var(--indigo);
+  }
+
+  .day-btn .d-name {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .day-btn.active .d-name { color: rgba(255,255,255,0.7); }
+
+  .day-btn .d-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .day-btn.active .d-num { color: #fff; }
+
+  .day-btn .d-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--terra);
+  }
+
+  .day-btn.active .d-dot { background: rgba(255,255,255,0.6); }
+
+  .day-btn.no-event .d-dot { opacity: 0; }
+
+  .schedule-detail {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .detail-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid var(--cream-dark);
+  }
+
+  .time-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 7px 0;
+    border-bottom: 1px dashed var(--cream-dark);
+  }
+
+  .time-row:last-child { border-bottom: none; }
+
+  .t-time {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--terra-dark);
+    min-width: 48px;
+    padding-top: 1px;
+  }
+
+  .t-info strong {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .t-info span {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  /* ── CONTACTS MODULE ── */
+  .mod-contacts {
+    grid-column: 1 / 2;
+  }
+
+  .mod-contacts .module-label::before { background: var(--terra); }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cream);
+  }
+
+  .contact-row:last-child { border-bottom: none; }
+
+  .c-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--cream);
+    border: 1.5px solid var(--cream-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .c-info strong {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .c-info span {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .c-btn {
+    margin-left: auto;
+    background: var(--indigo-light);
+    border: 1.5px solid transparent;
+    color: var(--indigo-dark);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .c-btn:hover {
+    background: var(--indigo);
+    color: #fff;
+  }
+
+  /* ── ROUTE STATUS MODULE ── */
+  .mod-route {
+    grid-column: 2 / 3;
+  }
+
+  .mod-route .module-label::before { background: #5CBF7A; }
+
+  .route-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .route-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--cream);
+    border-radius: 10px;
+    border: 1.5px solid transparent;
+    transition: border-color 0.15s;
+  }
+
+  .route-item:hover { border-color: var(--cream-dark); }
+
+  .route-tag {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: var(--white);
+    background: var(--indigo);
+    padding: 2px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .route-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  .route-status {
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .rs-ok { color: #3D9F5A; }
+  .rs-delay { color: var(--terra-dark); }
+
+  .rs-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+
+  .rs-dot.ok { background: #5CBF7A; }
+  .rs-dot.delay { background: var(--terra); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+    .mod-news, .mod-schedule, .mod-contacts, .mod-route { grid-column: 1; }
+    .page-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1>Parent <em>Hub</em></h1>
+      <p>News, schedules & updates — Week of March 10, 2026</p>
+    </div>
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      All routes running on time
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid">
+
+    <!-- ALERT -->
+    <div class="module mod-alert">
+      <div class="alert-icon">📌</div>
+      <div class="alert-body">
+        <strong>Route 4B – Stop change this Friday, Mar 14</strong>
+        <span>Maple St. stop moves to Oak Ave. due to road works. Pickup time unchanged: 7:45 AM.</span>
+      </div>
+      <button class="dismiss-btn" onclick="this.closest('.mod-alert').remove()">✕</button>
+    </div>
+
+    <!-- NEWS -->
+    <div class="module mod-news">
+      <div class="module-label">Latest Announcements</div>
+      <div class="news-list">
+
+        <div class="news-item">
+          <span class="news-pip pip-urgent"></span>
+          <div class="news-content">
+            <strong>Spring Break — No Service March 24–28</strong>
+            <span>Dispatch is suspended for Spring Break. Regular service resumes March 31.</span>
+          </div>
+          <span class="news-date">Mar 10</span>
+        </div>
+
+        <div class="news-item">
+          <span class="news-pip pip-reminder"></span>
+          <div class="news-content">
+            <strong>Update Emergency Contacts by March 14</strong>
+            <span>Please verify your contacts in the parent portal before the deadline.</span>
+          </div>
+          <span class="news-date">Mar 9</span>
+        </div>
+
+        <div class="news-item">
+          <span class="news-pip pip-update"></span>
+          <div class="news-content">
+            <strong>Live Bus Tracking Now Available in the App</strong>
+            <span>Download Hoshida Dispatch Mobile and tap "Track My Bus" for real-time arrivals.</span>
+          </div>
+          <span class="news-date">Mar 7</span>
+        </div>
+
+        <div class="news-item">
+          <span class="news-pip pip-info"></span>
+          <div class="news-content">
+            <strong>Meet Ms. Rivera — New Driver for Route 2A</strong>
+            <span>Maria has 8 years of school transport experience and current first aid certification.</span>
+          </div>
+          <span class="news-date">Mar 5</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div class="module mod-schedule">
+      <div class="module-label">This Week's Schedule</div>
+
+      <div class="week-nav">
+        <button class="nav-btn">‹</button>
+        <span class="week-range">Mar 10 – Mar 14</span>
+        <button class="nav-btn">›</button>
+      </div>
+
+      <div class="day-row">
+        <button class="day-btn active" onclick="selectDay(this, 'mon')">
+          <span class="d-name">Mon</span>
+          <span class="d-num">10</span>
+          <span class="d-dot"></span>
+        </button>
+        <button class="day-btn" onclick="selectDay(this, 'tue')">
+          <span class="d-name">Tue</span>
+          <span class="d-num">11</span>
+          <span class="d-dot"></span>
+        </button>
+        <button class="day-btn no-event" onclick="selectDay(this, 'wed')">
+          <span class="d-name">Wed</span>
+          <span class="d-num">12</span>
+          <span class="d-dot"></span>
+        </button>
+        <button class="day-btn" onclick="selectDay(this, 'thu')">
+          <span class="d-name">Thu</span>
+          <span class="d-num">13</span>
+          <span class="d-dot"></span>
+        </button>
+        <button class="day-btn no-event" onclick="selectDay(this, 'fri')">
+          <span class="d-name">Fri</span>
+          <span class="d-num">14</span>
+          <span class="d-dot"></span>
+        </button>
+      </div>
+
+      <div class="schedule-detail" id="schedule-detail">
+        <div class="detail-title" id="detail-title">Monday, March 10 · Routes 2A & 4B</div>
+        <div class="time-row">
+          <span class="t-time">7:40 AM</span>
+          <div class="t-info"><strong>Morning Pickup Begins</strong><span>Elm St. → Oak Ave. → School</span></div>
+        </div>
+        <div class="time-row">
+          <span class="t-time">8:15 AM</span>
+          <div class="t-info"><strong>School Arrival</strong><span>Greenfield Kindergarten</span></div>
+        </div>
+        <div class="time-row">
+          <span class="t-time">2:45 PM</span>
+          <div class="t-info"><strong>Afternoon Departure</strong><span>Departs school on time ✓</span></div>
+        </div>
+        <div class="time-row">
+          <span class="t-time">3:20 PM</span>
+          <div class="t-info"><strong>Last Drop-off</strong><span>Maple St. area</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACTS -->
+    <div class="module mod-contacts">
+      <div class="module-label">Quick Contacts</div>
+      <div class="contact-row">
+        <div class="c-icon">📞</div>
+        <div class="c-info">
+          <strong>Dispatch Office</strong>
+          <span>Mon–Fri, 7 AM – 4 PM</span>
+        </div>
+        <button class="c-btn">Call</button>
+      </div>
+      <div class="contact-row">
+        <div class="c-icon">🚌</div>
+        <div class="c-info">
+          <strong>Route 2A · Ms. Rivera</strong>
+          <span>On duty 7–9 AM, 2–4 PM</span>
+        </div>
+        <button class="c-btn">Message</button>
+      </div>
+      <div class="contact-row">
+        <div class="c-icon">🆘</div>
+        <div class="c-info">
+          <strong>Emergency Line</strong>
+          <span>Available 24 / 7</span>
+        </div>
+        <button class="c-btn">Call</button>
+      </div>
+    </div>
+
+    <!-- ROUTE STATUS -->
+    <div class="module mod-route">
+      <div class="module-label">Route Status</div>
+      <div class="route-list">
+        <div class="route-item">
+          <span class="route-tag">1A</span>
+          <span class="route-name">North Elm Circuit</span>
+          <span class="route-status rs-ok"><span class="rs-dot ok"></span>On time</span>
+        </div>
+        <div class="route-item">
+          <span class="route-tag">2A</span>
+          <span class="route-name">Riverside Loop</span>
+          <span class="route-status rs-ok"><span class="rs-dot ok"></span>On time</span>
+        </div>
+        <div class="route-item">
+          <span class="route-tag">3C</span>
+          <span class="route-name">Hillside Run</span>
+          <span class="route-status rs-ok"><span class="rs-dot ok"></span>On time</span>
+        </div>
+        <div class="route-item">
+          <span class="route-tag">4B</span>
+          <span class="route-name">Maple–Oak Express</span>
+          <span class="route-status rs-delay"><span class="rs-dot delay"></span>Stop change</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const schedules = {
+    mon: { title: "Monday, March 10 · Routes 2A & 4B", times: [
+      ["7:40 AM","Morning Pickup Begins","Elm St. → Oak Ave. → School"],
+      ["8:15 AM","School Arrival","Greenfield Kindergarten"],
+      ["2:45 PM","Afternoon Departure","Departs school on time ✓"],
+      ["3:20 PM","Last Drop-off","Maple St. area"]
+    ]},
+    tue: { title: "Tuesday, March 11 · Routes 1A & 2A", times: [
+      ["7:38 AM","Morning Pickup Begins","North Elm Circuit start"],
+      ["8:15 AM","School Arrival","Greenfield Kindergarten"],
+      ["2:45 PM","Afternoon Departure","Departs school on time ✓"],
+      ["3:25 PM","Last Drop-off","Riverside Loop end"]
+    ]},
+    wed: { title: "Wednesday, March 12 · All Routes", times: [
+      ["7:40 AM","Morning Pickup Begins","All routes depart"],
+      ["8:15 AM","School Arrival","Greenfield Kindergarten"],
+      ["12:30 PM","Early Dismissal","Half-day — 12:30 PM pickup"],
+      ["1:10 PM","Last Drop-off","All routes complete"]
+    ]},
+    thu: { title: "Thursday, March 13 · Routes 3C & 4B", times: [
+      ["7:42 AM","Morning Pickup Begins","Hillside Run start"],
+      ["8:15 AM","School Arrival","Greenfield Kindergarten"],
+      ["2:45 PM","Afternoon Departure","Departs school on time ✓"],
+      ["3:30 PM","Last Drop-off","Hillside area"]
+    ]},
+    fri: { title: "Friday, March 14 · All Routes", times: [
+      ["7:40 AM","Morning Pickup Begins","Note: 4B uses Oak Ave. stop"],
+      ["8:15 AM","School Arrival","Greenfield Kindergarten"],
+      ["2:45 PM","Afternoon Departure","Departs school on time ✓"],
+      ["3:20 PM","Last Drop-off","Adjusted stops in effect"]
+    ]}
+  };
+
+  function selectDay(el, key) {
+    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    const s = schedules[key];
+    document.getElementById('detail-title').textContent = s.title;
+    const detail = document.getElementById('schedule-detail');
+    const rows = detail.querySelectorAll('.time-row');
+    rows.forEach(r => r.remove());
+    s.times.forEach(([time, title, sub]) => {
+      const row = document.createElement('div');
+      row.className = 'time-row';
+      row.innerHTML = `<span class="t-time">${time}</span><div class="t-info"><strong>${title}</strong><span>${sub}</span></div>`;
+      detail.appendChild(row);
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoshida Dispatch – For Schools</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:       #FAEDCA;
+  --cream-dark:  #F0DCA8;
+  --indigo:      #6C7DE2;
+  --indigo-light:#EEF0FC;
+  --indigo-dark: #4A5BC4;
+  --terra:       #E18F64;
+  --terra-dark:  #C46F44;
+  --ink:         #2B2D42;
+  --muted:       #7A7D95;
+  --white:       #FFFDF7;
+  --grey:        #D0D0D0;
+  --grey-border: #BEBEBE;
+  --r: 16px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); }
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--cream); }
+::-webkit-scrollbar-thumb { background:var(--cream-dark); border-radius:3px; }
+
+/* ── NAV ── */
+nav {
+  position:sticky; top:0; z-index:100;
+  background:rgba(250,237,202,0.95); backdrop-filter:blur(10px);
+  border-bottom:1.5px solid var(--cream-dark); padding:0 5vw;
+}
+.nav-inner { display:flex; align-items:center; justify-content:space-between; height:60px; max-width:1400px; margin:0 auto; }
+.logo { font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:8px; }
+.logo-dot { width:8px; height:8px; background:var(--terra); border-radius:50%; }
+.nav-links { display:flex; align-items:center; gap:28px; list-style:none; }
+.nav-links a { font-size:0.85rem; font-weight:600; color:var(--muted); text-decoration:none; transition:color 0.15s; }
+.nav-links a:hover, .nav-links a.active { color:var(--ink); }
+.nav-cta { display:flex; align-items:center; gap:10px; }
+
+/* ── BUTTONS ── */
+.btn { display:inline-flex; align-items:center; gap:6px; padding:9px 20px; border-radius:50px; font-size:0.83rem; font-weight:700; cursor:pointer; text-decoration:none; border:none; font-family:'DM Sans',sans-serif; transition:all 0.18s; }
+.btn-ghost { background:transparent; color:var(--ink); border:1.5px solid var(--cream-dark); }
+.btn-ghost:hover { border-color:var(--ink); }
+.btn-primary { background:var(--indigo); color:#fff; }
+.btn-primary:hover { background:var(--indigo-dark); }
+.btn-terra { background:var(--terra); color:#fff; }
+.btn-terra:hover { background:var(--terra-dark); }
+.btn-ink { background:var(--ink); color:#fff; }
+.btn-ink:hover { opacity:0.85; }
+.btn-cream { background:var(--cream); color:var(--ink); }
+.btn-cream:hover { background:var(--white); }
+.btn-outline-white { background:transparent; border:1.5px solid rgba(255,255,255,0.35); color:#fff; }
+.btn-outline-white:hover { border-color:#fff; }
+.btn-outline { background:transparent; color:var(--ink); border:1.5px solid var(--cream-dark); }
+.btn-outline:hover { border-color:var(--ink); }
+.btn-lg { padding:13px 30px; font-size:0.92rem; }
+
+/* ── LAYOUT ── */
+.section { padding:60px 5vw; }
+.section-inner { max-width:1400px; margin:0 auto; }
+.section-head { margin-bottom:24px; }
+.section-head h2 { font-family:'DM Serif Display',serif; font-size:2.2rem; line-height:1.15; color:var(--ink); }
+.section-head h2 em { font-style:italic; color:var(--terra); }
+.section-head p { margin-top:10px; font-size:0.95rem; color:var(--muted); line-height:1.6; max-width:520px; }
+
+/* ── MODULES ── */
+.mod { background:var(--white); border-radius:var(--r); border:1.5px solid var(--cream-dark); padding:32px; position:relative; overflow:hidden; }
+.mod-cream { background:var(--cream); border-color:var(--cream-dark); }
+.mod-indigo { background:var(--indigo); border-color:var(--indigo-dark); color:#fff; }
+.mod-terra  { background:var(--terra);  border-color:var(--terra-dark);  color:#fff; }
+.mod-ink    { background:var(--ink);    border-color:#1a1c2e;            color:#fff; }
+.mod-label { font-size:0.65rem; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.mod-label::before { content:''; width:16px; height:2px; background:currentColor; border-radius:2px; opacity:0.5; }
+.mod-indigo .mod-label, .mod-terra .mod-label, .mod-ink .mod-label { color:rgba(255,255,255,0.55); }
+
+/* ── GRID ── */
+.grid { display:grid; gap:16px; }
+.g2 { grid-template-columns:1fr 1fr; }
+.g3 { grid-template-columns:1fr 1fr 1fr; }
+.g4 { grid-template-columns:1fr 1fr 1fr 1fr; }
+
+/* ── BREADCRUMB ── */
+.breadcrumb { font-size:0.75rem; font-weight:600; color:var(--muted); margin-bottom:20px; display:flex; align-items:center; gap:6px; }
+.breadcrumb a { color:var(--muted); text-decoration:none; }
+.breadcrumb a:hover { color:var(--ink); }
+.breadcrumb span { opacity:0.5; }
+
+/* ── HERO ── */
+.hero-grid { grid-template-columns:1fr 1fr; align-items:stretch; min-height:380px; }
+
+.mod-hero-text {
+  background:var(--ink); border-color:#1a1c2e; color:#fff;
+  padding:52px 48px; display:flex; flex-direction:column; justify-content:center;
+}
+.mod-hero-text::before { content:''; position:absolute; top:-80px; right:-80px; width:260px; height:260px; background:var(--indigo); border-radius:50%; opacity:0.1; }
+.mod-hero-text::after  { content:''; position:absolute; bottom:-50px; left:30%; width:160px; height:160px; background:var(--terra); border-radius:50%; opacity:0.09; }
+.hero-eyebrow { font-size:0.7rem; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--terra); margin-bottom:14px; position:relative; z-index:1; }
+.hero-h1 { font-family:'DM Serif Display',serif; font-size:3rem; line-height:1.1; color:#fff; margin-bottom:14px; position:relative; z-index:1; }
+.hero-h1 em { font-style:italic; color:var(--terra); }
+.hero-sub { font-size:0.95rem; color:rgba(255,255,255,0.62); line-height:1.65; margin-bottom:28px; position:relative; z-index:1; max-width:440px; }
+.hero-actions { display:flex; gap:10px; flex-wrap:wrap; position:relative; z-index:1; }
+
+.mod-hero-photo { background:var(--grey); border-color:var(--grey-border); padding:0; }
+
+/* ── FEATURES ── */
+.features-grid { grid-template-columns:1fr 1fr 1fr; }
+.mod-feature { padding:32px; display:flex; flex-direction:column; gap:14px; }
+.feature-icon { font-size:1.8rem; }
+.feature-title { font-family:'DM Serif Display',serif; font-size:1.15rem; color:var(--ink); }
+.mod-indigo .feature-title { color:#fff; }
+.feature-body { font-size:0.85rem; color:var(--muted); line-height:1.65; }
+.mod-indigo .feature-body { color:rgba(255,255,255,0.7); }
+
+/* ── WHAT YOU GET (gif/demo area) ── */
+.get-grid { grid-template-columns:1fr 1fr; align-items:stretch; }
+.mod-get-text { padding:44px; display:flex; flex-direction:column; justify-content:center; }
+.get-h2 { font-family:'DM Serif Display',serif; font-size:2rem; line-height:1.2; color:var(--ink); margin-bottom:12px; }
+.get-h2 em { font-style:italic; color:var(--terra); }
+.get-body { font-size:0.9rem; color:var(--muted); line-height:1.7; margin-bottom:28px; }
+.get-bullets { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+.get-bullet { display:flex; align-items:flex-start; gap:10px; font-size:0.85rem; color:var(--ink); line-height:1.5; }
+.get-bullet-dot { width:7px; height:7px; background:var(--terra); border-radius:50%; flex-shrink:0; margin-top:5px; }
+.mod-get-visual { background:var(--grey); border-color:var(--grey-border); min-height:340px; padding:0; display:flex; align-items:center; justify-content:center; }
+.visual-label { font-size:0.75rem; font-weight:700; color:var(--grey-border); letter-spacing:0.5px; text-transform:uppercase; }
+
+/* ── PROCESS ── */
+.process-grid { grid-template-columns:1fr 1fr 1fr; }
+.mod-process-intro { grid-column:1 / -1; padding:36px 44px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+.process-intro-h2 { font-family:'DM Serif Display',serif; font-size:2rem; line-height:1.2; color:#fff; }
+.process-intro-h2 em { font-style:italic; color:var(--cream); }
+.process-intro-p { font-size:0.88rem; color:rgba(255,255,255,0.6); margin-top:8px; max-width:400px; line-height:1.6; }
+
+.mod-step { padding:32px; display:flex; flex-direction:column; justify-content:space-between; min-height:220px; }
+.step-num { font-family:'DM Serif Display',serif; font-size:3.2rem; line-height:1; color:var(--cream-dark); margin-bottom:16px; }
+.step-icon { font-size:1.6rem; margin-bottom:14px; }
+.step-title { font-family:'DM Serif Display',serif; font-size:1.15rem; color:var(--ink); margin-bottom:8px; }
+.step-body { font-size:0.83rem; color:var(--muted); line-height:1.6; flex:1; }
+
+/* ── PRICING ── */
+.pricing-grid { grid-template-columns:1fr 1.4fr 1fr; align-items:stretch; }
+.mod-pricing-main { padding:40px; display:flex; flex-direction:column; }
+.pricing-badge { display:inline-flex; align-items:center; gap:6px; background:var(--terra); color:#fff; border-radius:50px; padding:5px 14px; font-size:0.72rem; font-weight:700; letter-spacing:0.5px; margin-bottom:20px; width:fit-content; }
+.pricing-h3 { font-family:'DM Serif Display',serif; font-size:1.8rem; line-height:1.2; color:var(--ink); margin-bottom:10px; }
+.pricing-sub { font-size:0.88rem; color:var(--muted); line-height:1.6; margin-bottom:28px; }
+.pricing-contact { font-family:'DM Serif Display',serif; font-size:1.1rem; font-style:italic; color:var(--muted); margin-bottom:24px; padding:16px 20px; background:var(--cream); border-radius:12px; border:1.5px solid var(--cream-dark); }
+.pricing-checks { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+.pricing-check { display:flex; align-items:center; gap:10px; font-size:0.85rem; color:var(--ink); font-weight:500; }
+.check-icon { width:20px; height:20px; border-radius:50%; background:var(--indigo-light); border:1.5px solid var(--indigo); display:flex; align-items:center; justify-content:center; font-size:0.65rem; color:var(--indigo-dark); flex-shrink:0; }
+
+.mod-pricing-note { padding:32px; display:flex; flex-direction:column; justify-content:center; }
+.pricing-note-title { font-family:'DM Serif Display',serif; font-size:1.2rem; color:#fff; margin-bottom:10px; }
+.pricing-note-body { font-size:0.85rem; color:rgba(255,255,255,0.7); line-height:1.65; }
+
+/* ── TESTIMONIALS ── */
+.testi-grid { grid-template-columns:1fr 1fr 1fr; }
+.mod-testi { padding:28px; display:flex; flex-direction:column; gap:14px; }
+.testi-stars { color:var(--terra); font-size:0.85rem; letter-spacing:2px; }
+.testi-quote { font-family:'DM Serif Display',serif; font-size:1.02rem; line-height:1.5; color:var(--ink); flex:1; }
+.mod-ink .testi-quote { color:#fff; }
+.testi-footer { display:flex; align-items:center; gap:10px; padding-top:12px; border-top:1.5px solid var(--cream); }
+.mod-ink .testi-footer { border-top-color:rgba(255,255,255,0.12); }
+.testi-avatar { width:36px; height:36px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:700; color:var(--muted); flex-shrink:0; }
+.mod-ink .testi-avatar { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.6); }
+.testi-name { font-size:0.8rem; font-weight:700; color:var(--ink); }
+.mod-ink .testi-name { color:#fff; }
+.testi-role { font-size:0.72rem; color:var(--muted); }
+.mod-ink .testi-role { color:rgba(255,255,255,0.45); }
+
+/* Testi nav arrows */
+.testi-nav { display:flex; gap:8px; margin-top:8px; }
+.testi-arrow { width:32px; height:32px; border-radius:50%; border:1.5px solid var(--cream-dark); background:none; color:var(--muted); font-size:0.9rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
+.testi-arrow:hover { border-color:var(--indigo); color:var(--indigo); }
+
+/* ── CTA BANNER ── */
+.mod-cta { padding:56px 60px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+.cta-h2 { font-family:'DM Serif Display',serif; font-size:2.2rem; line-height:1.15; color:#fff; }
+.cta-h2 em { font-style:italic; color:var(--cream); }
+.cta-p { font-size:0.9rem; color:rgba(255,255,255,0.55); margin-top:8px; line-height:1.6; max-width:400px; }
+.cta-form { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.cta-input { padding:13px 20px; border-radius:50px; border:1.5px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.1); color:#fff; font-family:'DM Sans',sans-serif; font-size:0.85rem; min-width:240px; outline:none; transition:border-color 0.15s; }
+.cta-input::placeholder { color:rgba(255,255,255,0.4); }
+.cta-input:focus { border-color:rgba(255,255,255,0.6); }
+
+/* ── FOOTER ── */
+footer { background:var(--ink); padding:48px 5vw 28px; }
+.footer-inner { max-width:1400px; margin:0 auto; }
+.footer-top { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:40px; padding-bottom:40px; border-bottom:1.5px solid rgba(255,255,255,0.08); margin-bottom:28px; }
+.footer-brand p { font-size:0.82rem; color:rgba(255,255,255,0.45); line-height:1.6; max-width:220px; margin-top:10px; }
+.footer-col h4 { font-size:0.68rem; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:14px; }
+.footer-col ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.footer-col a { font-size:0.83rem; color:rgba(255,255,255,0.55); text-decoration:none; transition:color 0.15s; }
+.footer-col a:hover { color:#fff; }
+.footer-bottom { display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+.footer-bottom p { font-size:0.75rem; color:rgba(255,255,255,0.3); }
+.footer-legal { display:flex; gap:20px; }
+.footer-legal a { font-size:0.75rem; color:rgba(255,255,255,0.3); text-decoration:none; }
+.footer-legal a:hover { color:rgba(255,255,255,0.6); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-dot"></span>Hoshida Dispatch</a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Teachers</a></li>
+      <li><a href="#" class="active">Schools</a></li>
+      <li><a href="#">Resources</a></li>
+      <li><a href="#">Parent News</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Log in</a>
+      <a href="#" class="btn btn-primary">Apply</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="section" style="padding-top:40px;">
+  <div class="section-inner">
+    <div class="breadcrumb"><a href="#">Home</a><span>/</span><span>For Schools</span></div>
+    <div class="grid hero-grid">
+
+      <div class="mod mod-hero-text">
+        <div class="hero-eyebrow">For Schools &amp; CTA</div>
+        <h1 class="hero-h1">Let us <em>teach</em><br>your kids</h1>
+        <p class="hero-sub">Hoshida's teachers will help your kids grow and learn in a safe and organised way. Our curriculum is student-centred, and we make sure to give each student the attention they need.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-terra btn-lg">Get started</a>
+          <a href="#" class="btn btn-outline-white btn-lg">Learn more</a>
+        </div>
+      </div>
+
+      <div class="mod mod-hero-photo"></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2>What makes us <em>different</em></h2>
+      <p>Here is a little taste of what you get when you trust us with your English education.</p>
+    </div>
+    <div class="grid features-grid">
+
+      <div class="mod mod-feature">
+        <div class="feature-icon">&#x1F4AA;</div>
+        <div class="feature-title">Qualified educators</div>
+        <div class="feature-body">Every teacher is vetted through Hoshida International School. Proven classroom experience with young learners, every time.</div>
+      </div>
+
+      <div class="mod mod-indigo mod-feature">
+        <div class="mod-label">Our approach</div>
+        <div class="feature-icon">&#x1F3AE;</div>
+        <div class="feature-title">Interactive learning</div>
+        <div class="feature-body">Lessons built on genuine interaction and play. We teach English through conversation, games and natural learning moments.</div>
+      </div>
+
+      <div class="mod mod-feature">
+        <div class="feature-icon">&#x1F4CB;</div>
+        <div class="feature-title">Adapts to your school</div>
+        <div class="feature-body">Your curriculum and schedule guides our approach. Teachers work with your existing structure and goals, not against them.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── WHAT YOU GET ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="grid get-grid">
+
+      <div class="mod mod-get-text">
+        <div class="mod-label">Discover</div>
+        <div class="get-h2">Everything you <em>get</em> with Hoshida</div>
+        <div class="get-body">When you partner with us, you are not just hiring a teacher. You are gaining a dedicated educator who integrates seamlessly with your school.</div>
+        <div class="get-bullets">
+          <div class="get-bullet"><span class="get-bullet-dot"></span>Experienced teachers sent directly to your school</div>
+          <div class="get-bullet"><span class="get-bullet-dot"></span>Lessons built on engagement and real interaction</div>
+          <div class="get-bullet"><span class="get-bullet-dot"></span>Programs that adapt to your school's needs</div>
+          <div class="get-bullet"><span class="get-bullet-dot"></span>Consistent teacher placement for student continuity</div>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <a href="#" class="btn btn-primary">Discover more</a>
+          <a href="#" class="btn btn-outline">Learn more</a>
+        </div>
+      </div>
+
+      <div class="mod mod-get-visual">
+        <div class="visual-label">Feature animation</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="grid process-grid">
+
+      <div class="mod mod-ink mod-process-intro">
+        <div>
+          <div class="process-intro-h2">Getting started is <em>straightforward</em></div>
+          <div class="process-intro-p">Tell us what your kindergarten needs and what matters most in English instruction. We listen first, then we act.</div>
+        </div>
+        <a href="#" class="btn btn-cream btn-lg">Contact us</a>
+      </div>
+
+      <div class="mod mod-step">
+        <div>
+          <div class="step-num">01</div>
+          <div class="step-icon">&#x2B50;</div>
+          <div class="step-title">You reach out</div>
+          <div class="step-body">Contact us about your school's needs and what you're looking for in English instruction. We listen first, then act.</div>
+        </div>
+      </div>
+
+      <div class="mod mod-cream mod-step">
+        <div>
+          <div class="step-num">02</div>
+          <div class="step-icon">&#x1F4CB;</div>
+          <div class="step-title">We find your teacher</div>
+          <div class="step-body">We select a teacher whose experience and style align with your curriculum and goals. The right match matters.</div>
+        </div>
+      </div>
+
+      <div class="mod mod-terra mod-step">
+        <div>
+          <div class="step-num" style="color:rgba(255,255,255,0.25)">03</div>
+          <div class="step-icon">&#x1F4F1;</div>
+          <div class="step-title" style="color:#fff">Lessons begin</div>
+          <div class="step-body" style="color:rgba(255,255,255,0.75)">Your teacher arrives prepared and ready to engage your students from day one. No disruption, only improvement.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2>Simple, <em>transparent</em> pricing</h2>
+    </div>
+    <div class="grid pricing-grid">
+
+      <div class="mod mod-pricing-note mod-indigo">
+        <div class="pricing-note-title">World class teachers</div>
+        <div class="pricing-note-body">Thousands of happy children with bright futures. Our teachers are the best in the business, and our pricing reflects the value they bring.</div>
+      </div>
+
+      <div class="mod mod-pricing-main">
+        <div class="pricing-badge">&#x1F4B0; Pricing</div>
+        <div class="pricing-h3">Competitive pricing</div>
+        <div class="pricing-sub">We offer flexible programs to suit your school's size and schedule. Contact us for a tailored quote.</div>
+        <div class="pricing-contact">Please contact us for our pricing</div>
+        <div class="pricing-checks">
+          <div class="pricing-check"><span class="check-icon">&#x2713;</span>Competitive pricing</div>
+          <div class="pricing-check"><span class="check-icon">&#x2713;</span>World class teachers</div>
+          <div class="pricing-check"><span class="check-icon">&#x2713;</span>Thousands of happy children with bright futures</div>
+        </div>
+        <a href="#" class="btn btn-ink" style="width:fit-content;">Contact us</a>
+      </div>
+
+      <div class="mod mod-pricing-note mod-terra">
+        <div class="pricing-note-title">Students first</div>
+        <div class="pricing-note-body">Your children are our number one priority. Every program is tailored to ensure each student gets the attention and care they deserve.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="section-head" style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+      <div>
+        <h2>What schools <em>say</em></h2>
+        <p>Real voices from our partners.</p>
+      </div>
+      <div class="testi-nav">
+        <button class="testi-arrow">&#8592;</button>
+        <button class="testi-arrow">&#8594;</button>
+      </div>
+    </div>
+    <div class="grid testi-grid">
+
+      <div class="mod mod-testi">
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="testi-quote">"The teachers arrived prepared and genuinely interested in our students. The lessons felt natural, not forced."</div>
+        <div class="testi-footer">
+          <div class="testi-avatar">MT</div>
+          <div>
+            <div class="testi-name">Maria Tanaka</div>
+            <div class="testi-role">Director, Sakura Kindergarten</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod mod-cream mod-testi">
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="testi-quote">"Our children ask for English lessons now. That tells you everything about the quality of teaching."</div>
+        <div class="testi-footer">
+          <div class="testi-avatar">KY</div>
+          <div>
+            <div class="testi-name">Kenji Yamamoto</div>
+            <div class="testi-role">Principal, Sunrise Academy</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod mod-ink mod-testi">
+        <div class="testi-stars" style="color:var(--terra)">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="testi-quote">"They understood our curriculum and worked within it. No disruption, only improvement."</div>
+        <div class="testi-footer">
+          <div class="testi-avatar">YS</div>
+          <div>
+            <div class="testi-name">Yuki Sato</div>
+            <div class="testi-role">Head Teacher, Bright Minds</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="mod mod-indigo mod-cta">
+      <div>
+        <div class="cta-h2">Let's work <em>together</em></div>
+        <div class="cta-p">Send us a message and we will discuss how Hoshida Dispatch fits your school.</div>
+      </div>
+      <div class="cta-form">
+        <input class="cta-input" type="text" placeholder="Your school's email address">
+        <a href="#" class="btn btn-cream btn-lg">Get started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="color:#fff;"><span class="logo-dot"></span>Hoshida Dispatch</a>
+        <p>Bringing qualified English teachers to kindergartens across Japan.</p>
+      </div>
+      <div class="footer-col">
+        <h4>For Schools</h4>
+        <ul>
+          <li><a href="#">Teaching approach</a></li>
+          <li><a href="#">Our programs</a></li>
+          <li><a href="#">Apply now</a></li>
+          <li><a href="#">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About us</a></li>
+          <li><a href="#">Teacher info</a></li>
+          <li><a href="#">Resources</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">Parent news</a></li>
+          <li><a href="#">hello@hoshidadispatch.com</a></li>
+          <li><a href="#">1800 456 7890</a></li>
+          <li><a href="#">Level 2, 45 Pitt St, Sydney</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Hoshida Dispatch. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy policy</a>
+        <a href="#">Terms of service</a>
+        <a href="#">Cookie settings</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

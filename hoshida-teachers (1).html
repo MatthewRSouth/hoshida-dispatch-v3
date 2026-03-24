@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoshida Dispatch – Teachers</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:       #FAEDCA;
+  --cream-dark:  #F0DCA8;
+  --indigo:      #6C7DE2;
+  --indigo-light:#EEF0FC;
+  --indigo-dark: #4A5BC4;
+  --terra:       #E18F64;
+  --terra-dark:  #C46F44;
+  --ink:         #2B2D42;
+  --muted:       #7A7D95;
+  --white:       #FFFDF7;
+  --grey:        #D0D0D0;
+  --grey-border: #BEBEBE;
+  --r: 16px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); }
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--cream); }
+::-webkit-scrollbar-thumb { background:var(--cream-dark); border-radius:3px; }
+
+/* NAV */
+nav {
+  position:sticky; top:0; z-index:100;
+  background:rgba(250,237,202,0.95); backdrop-filter:blur(10px);
+  border-bottom:1.5px solid var(--cream-dark); padding:0 5vw;
+}
+.nav-inner { display:flex; align-items:center; justify-content:space-between; height:60px; max-width:1400px; margin:0 auto; }
+.logo { font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:8px; }
+.logo-dot { width:8px; height:8px; background:var(--terra); border-radius:50%; }
+.nav-links { display:flex; align-items:center; gap:28px; list-style:none; }
+.nav-links a { font-size:0.85rem; font-weight:600; color:var(--muted); text-decoration:none; transition:color 0.15s; }
+.nav-links a:hover, .nav-links a.active { color:var(--ink); }
+.nav-cta { display:flex; align-items:center; gap:10px; }
+
+.btn { display:inline-flex; align-items:center; gap:6px; padding:9px 20px; border-radius:50px; font-size:0.83rem; font-weight:700; cursor:pointer; text-decoration:none; border:none; font-family:'DM Sans',sans-serif; transition:all 0.18s; }
+.btn-ghost { background:transparent; color:var(--ink); border:1.5px solid var(--cream-dark); }
+.btn-ghost:hover { border-color:var(--ink); }
+.btn-primary { background:var(--indigo); color:#fff; }
+.btn-primary:hover { background:var(--indigo-dark); }
+.btn-terra { background:var(--terra); color:#fff; }
+.btn-terra:hover { background:var(--terra-dark); }
+.btn-ink { background:var(--ink); color:#fff; }
+.btn-cream { background:var(--cream); color:var(--ink); }
+.btn-cream:hover { background:var(--white); }
+.btn-outline-white { background:transparent; border:1.5px solid rgba(255,255,255,0.35); color:#fff; }
+.btn-outline-white:hover { border-color:#fff; }
+.btn-outline { background:transparent; color:var(--ink); border:1.5px solid var(--cream-dark); }
+.btn-outline:hover { border-color:var(--ink); }
+.btn-lg { padding:13px 30px; font-size:0.92rem; }
+
+/* SECTION */
+.section { padding:60px 5vw; }
+.section-inner { max-width:1400px; margin:0 auto; }
+.section-head { margin-bottom:24px; }
+.section-head h2 { font-family:'DM Serif Display',serif; font-size:2.2rem; line-height:1.15; color:var(--ink); }
+.section-head h2 em { font-style:italic; color:var(--terra); }
+.section-head p { margin-top:10px; font-size:0.95rem; color:var(--muted); line-height:1.6; max-width:520px; }
+
+/* MODULE */
+.mod { background:var(--white); border-radius:var(--r); border:1.5px solid var(--cream-dark); padding:32px; position:relative; overflow:hidden; }
+.mod-cream { background:var(--cream); border-color:var(--cream-dark); }
+.mod-indigo { background:var(--indigo); border-color:var(--indigo-dark); color:#fff; }
+.mod-ink { background:var(--ink); border-color:#1a1c2e; color:#fff; }
+.mod-terra { background:var(--terra); border-color:var(--terra-dark); color:#fff; }
+
+.mod-label { font-size:0.65rem; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.mod-label::before { content:''; width:16px; height:2px; background:currentColor; border-radius:2px; opacity:0.5; }
+.mod-indigo .mod-label, .mod-ink .mod-label, .mod-terra .mod-label { color:rgba(255,255,255,0.55); }
+
+/* GRID */
+.grid { display:grid; gap:16px; }
+.g2 { grid-template-columns:1fr 1fr; }
+.g3 { grid-template-columns:1fr 1fr 1fr; }
+.g4 { grid-template-columns:1fr 1fr 1fr 1fr; }
+
+/* ── BREADCRUMB ── */
+.breadcrumb { font-size:0.75rem; font-weight:600; color:var(--muted); margin-bottom:20px; display:flex; align-items:center; gap:6px; }
+.breadcrumb a { color:var(--muted); text-decoration:none; }
+.breadcrumb span { opacity:0.5; }
+
+/* ── HERO MODULE ── */
+.hero-mod {
+  background:var(--ink); border-color:#1a1c2e; color:#fff;
+  padding:52px 48px; display:flex; align-items:center;
+  justify-content:space-between; gap:40px; flex-wrap:wrap;
+  min-height:280px;
+}
+.hero-mod::before { content:''; position:absolute; top:-80px; right:-80px; width:280px; height:280px; background:var(--indigo); border-radius:50%; opacity:0.1; }
+.hero-mod::after  { content:''; position:absolute; bottom:-60px; left:35%; width:180px; height:180px; background:var(--terra); border-radius:50%; opacity:0.09; }
+.hero-left { position:relative; z-index:1; max-width:520px; }
+.hero-eyebrow { font-size:0.7rem; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--terra); margin-bottom:14px; }
+.hero-h1 { font-family:'DM Serif Display',serif; font-size:3rem; line-height:1.1; color:#fff; margin-bottom:14px; }
+.hero-h1 em { font-style:italic; color:var(--terra); }
+.hero-sub { font-size:0.95rem; color:rgba(255,255,255,0.62); line-height:1.65; margin-bottom:28px; }
+.hero-actions { display:flex; gap:10px; flex-wrap:wrap; }
+.hero-right { display:flex; flex-direction:column; gap:20px; border-left:1.5px solid rgba(255,255,255,0.1); padding-left:40px; flex-shrink:0; position:relative; z-index:1; }
+.hero-stat-num { font-family:'DM Serif Display',serif; font-size:2.2rem; color:#fff; line-height:1; }
+.hero-stat-num span { color:var(--terra); }
+.hero-stat-label { font-size:0.75rem; color:rgba(255,255,255,0.45); margin-top:2px; }
+
+/* ── TEACHING STYLE ── */
+.style-grid { grid-template-columns:1fr 1fr 1fr; grid-template-rows:auto auto; }
+.mod-style-hero { grid-column:1; grid-row:1/3; background:var(--indigo); border-color:var(--indigo-dark); color:#fff; display:flex; flex-direction:column; justify-content:flex-end; min-height:380px; }
+.style-label { font-size:0.65rem; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:10px; }
+.style-h3 { font-family:'DM Serif Display',serif; font-size:1.8rem; line-height:1.2; color:#fff; margin-bottom:10px; }
+.style-body { font-size:0.87rem; color:rgba(255,255,255,0.7); line-height:1.65; }
+.mod-photo-box { background:var(--grey); border-color:var(--grey-border); min-height:180px; padding:0; }
+.mod-style-point { padding:28px; }
+.style-point-title { font-family:'DM Serif Display',serif; font-size:1.05rem; color:var(--ink); margin-bottom:6px; }
+.style-point-body { font-size:0.82rem; color:var(--muted); line-height:1.6; }
+
+/* ── HOW WE HELP ── */
+.help-intro { font-size:0.9rem; color:var(--muted); line-height:1.6; max-width:600px; margin-bottom:24px; }
+
+/* ── STICKY TEACHER LAYOUT ── */
+.teacher-layout { display:flex; gap:16px; align-items:flex-start; }
+
+.sticky-panel {
+  width:32%; position:sticky; top:76px; flex-shrink:0;
+  background:var(--white); border-radius:var(--r);
+  border:1.5px solid var(--cream-dark); padding:28px;
+}
+.panel-label { font-size:0.65rem; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+.panel-label::before { content:''; width:16px; height:2px; background:var(--terra); border-radius:2px; }
+.panel-num { font-family:'DM Serif Display',serif; font-size:4.5rem; font-style:italic; line-height:1; color:var(--cream-dark); margin-bottom:6px; transition:color 0.4s; }
+.panel-name { font-family:'DM Serif Display',serif; font-size:1.8rem; line-height:1.15; color:var(--ink); margin-bottom:4px; }
+.panel-specialty { font-size:0.82rem; font-weight:600; color:var(--terra); margin-bottom:14px; }
+.panel-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+.panel-tag { font-size:0.68rem; font-weight:700; letter-spacing:0.3px; padding:3px 10px; border-radius:50px; background:var(--indigo-light); color:var(--indigo-dark); }
+.panel-divider { height:1.5px; background:var(--cream-dark); margin:16px 0; }
+.panel-progress { display:flex; align-items:center; gap:7px; margin-bottom:20px; }
+.progress-dot { height:7px; border-radius:4px; background:var(--cream-dark); transition:width 0.4s ease, background 0.4s ease; }
+.progress-dot.active { background:var(--indigo); width:24px !important; }
+.progress-count { font-size:0.7rem; color:var(--muted); margin-left:4px; font-weight:600; }
+.panel-btns { display:flex; gap:8px; }
+.panel-btns .btn { flex:1; justify-content:center; font-size:0.78rem; padding:9px 14px; }
+
+/* ── TEACHER CARDS (tall) ── */
+.cards-col { flex:1; display:flex; flex-direction:column; gap:16px; }
+
+.teacher-card {
+  background:var(--white); border-radius:var(--r);
+  border:1.5px solid var(--cream-dark);
+  padding:40px;
+  min-height:68vh;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  position:relative; overflow:hidden;
+  transition:border-color 0.3s, box-shadow 0.3s;
+  cursor:pointer;
+}
+.teacher-card.active {
+  border-color:var(--indigo);
+  box-shadow:0 8px 40px -8px rgba(108,125,226,0.18);
+}
+
+.card-deco-num {
+  position:absolute; top:-16px; right:-4px;
+  font-family:'DM Serif Display',serif; font-size:11rem;
+  font-style:italic; font-weight:900; line-height:1;
+  color:var(--cream); pointer-events:none; user-select:none;
+  transition:color 0.3s;
+}
+.teacher-card.active .card-deco-num { color:var(--indigo-light); }
+
+.card-photo {
+  position:absolute; top:28px; left:40px;
+  width:72px; height:72px; border-radius:50%;
+  background:var(--grey); border:2px solid var(--grey-border);
+  transition:border-color 0.3s;
+}
+.teacher-card.active .card-photo { border-color:var(--indigo); }
+
+.card-years {
+  position:absolute; top:28px; right:28px;
+  font-size:0.72rem; font-weight:700; color:var(--muted);
+  background:var(--cream); border:1.5px solid var(--cream-dark);
+  border-radius:50px; padding:5px 13px; transition:all 0.3s;
+}
+.teacher-card.active .card-years { background:var(--indigo-light); color:var(--indigo-dark); border-color:var(--indigo); }
+
+.card-body { position:relative; z-index:1; padding-top:72px; }
+
+.card-tags { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:18px; }
+.card-tag { font-size:0.68rem; font-weight:700; padding:4px 11px; border-radius:50px; background:var(--cream); border:1.5px solid var(--cream-dark); color:var(--muted); transition:all 0.3s; }
+.teacher-card.active .card-tag { background:var(--indigo-light); color:var(--indigo-dark); border-color:var(--indigo); }
+
+.card-name { font-family:'DM Serif Display',serif; font-size:2.8rem; font-weight:900; line-height:1.05; color:var(--ink); margin-bottom:6px; }
+.card-specialty { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:var(--muted); margin-bottom:18px; transition:color 0.3s; }
+.teacher-card.active .card-specialty { color:var(--terra); }
+
+.card-rule { height:1.5px; background:var(--cream-dark); width:50%; margin-bottom:18px; transition:background 0.3s; }
+.teacher-card.active .card-rule { background:var(--indigo); }
+
+.card-bio { font-size:0.9rem; color:var(--muted); line-height:1.75; max-width:480px; margin-bottom:22px; }
+.card-link { background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:700; color:var(--indigo); display:inline-flex; align-items:center; gap:5px; padding:0; transition:gap 0.15s; }
+.card-link:hover { gap:9px; }
+
+/* ── STUDENTS FIRST ── */
+.students-grid { grid-template-columns:1fr 1fr; align-items:stretch; }
+.mod-students-text { padding:40px; display:flex; flex-direction:column; justify-content:center; }
+.students-h2 { font-family:'DM Serif Display',serif; font-size:2.2rem; line-height:1.15; color:#fff; margin-bottom:10px; }
+.students-h2 em { font-style:italic; color:var(--cream); }
+.students-sub { font-size:0.9rem; color:rgba(255,255,255,0.62); line-height:1.65; margin-bottom:28px; }
+.students-stats { display:flex; flex-direction:column; gap:16px; }
+.students-stat-num { font-family:'DM Serif Display',serif; font-size:2.2rem; color:#fff; line-height:1; }
+.students-stat-num span { color:var(--terra); }
+.students-stat-label { font-size:0.78rem; color:rgba(255,255,255,0.45); margin-top:2px; }
+.mod-video { background:var(--grey); border-color:var(--grey-border); min-height:320px; padding:0; display:flex; align-items:center; justify-content:center; }
+.video-play { width:64px; height:64px; background:rgba(255,255,255,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; cursor:pointer; transition:transform 0.2s; }
+.video-play:hover { transform:scale(1.08); }
+
+/* ── CTA ── */
+.mod-cta { padding:48px 56px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+.cta-h2 { font-family:'DM Serif Display',serif; font-size:2rem; line-height:1.2; color:#fff; }
+.cta-h2 em { font-style:italic; color:var(--cream); }
+.cta-p { font-size:0.88rem; color:rgba(255,255,255,0.55); margin-top:8px; line-height:1.6; }
+.cta-actions { display:flex; gap:10px; flex-wrap:wrap; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-dot"></span>Hoshida Dispatch</a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#" class="active">Teachers</a></li>
+      <li><a href="#">Schools</a></li>
+      <li><a href="#">Resources</a></li>
+      <li><a href="#">Parent News</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Log in</a>
+      <a href="#" class="btn btn-primary">Apply</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="section" style="padding-top:40px;">
+  <div class="section-inner">
+    <div class="breadcrumb"><a href="#">Home</a><span>/</span><span>Teachers</span></div>
+    <div class="mod hero-mod">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Teacher Information</div>
+        <h1 class="hero-h1">World class <em>teachers</em></h1>
+        <p class="hero-sub">Every educator we dispatch is experienced, vetted, and genuinely passionate about working with young learners. Meet the team behind the lessons.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-terra btn-lg">Join our team</a>
+          <a href="#" class="btn btn-outline-white btn-lg">Our philosophy</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div>
+          <div class="hero-stat-num">1,000<span>+</span></div>
+          <div class="hero-stat-label">Students taught</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">500<span>+</span></div>
+          <div class="hero-stat-label">Satisfied parents</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">10k<span>+</span></div>
+          <div class="hero-stat-label">Hours teaching English</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TEACHING STYLE ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2>Teaching <em>style</em></h2>
+      <p>We use a combination of Dutch Montessori and other proven methods, adapted for young English learners.</p>
+    </div>
+    <div class="grid style-grid">
+      <div class="mod mod-style-hero">
+        <div class="style-label">Philosophy</div>
+        <div class="style-h3">Montessori-influenced English instruction</div>
+        <div class="style-body">Children make choices based on individual abilities and aspirations. Our teachers bring that same spirit to every lesson.</div>
+      </div>
+      <div class="mod mod-photo-box"></div>
+      <div class="mod mod-style-point">
+        <div class="style-point-title">We guide children</div>
+        <div class="style-point-body">Teachers support each student's natural curiosity, creating conditions for language to emerge organically.</div>
+      </div>
+      <div class="mod mod-photo-box"></div>
+      <div class="mod mod-cream mod-style-point">
+        <div class="style-point-title">Gamification</div>
+        <div class="style-point-body">Games, songs, and movement make English stick. Learning that feels like play is learning that lasts.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW WE HELP / TEACHER CARDS ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2>How we <em>help you</em></h2>
+      <p>Here is a little taste of what you get when you trust us with your English education. Every teacher brings something distinct.</p>
+    </div>
+    <div class="teacher-layout">
+
+      <!-- STICKY PANEL -->
+      <div class="sticky-panel" id="sticky-panel">
+        <div class="panel-label">Our Educators</div>
+        <div class="panel-num" id="panel-num">01</div>
+        <div class="panel-name" id="panel-name">Ms. Harlow</div>
+        <div class="panel-specialty" id="panel-specialty">Phonics &amp; Early Childhood</div>
+        <div class="panel-tags" id="panel-tags">
+          <span class="panel-tag">Ages 3&ndash;6</span>
+          <span class="panel-tag">Phonics</span>
+          <span class="panel-tag">Play-based</span>
+        </div>
+        <div class="panel-divider"></div>
+        <div class="panel-progress" id="panel-progress">
+          <div class="progress-dot active" style="width:24px;" data-i="0"></div>
+          <div class="progress-dot" style="width:7px;" data-i="1"></div>
+          <div class="progress-dot" style="width:7px;" data-i="2"></div>
+          <div class="progress-dot" style="width:7px;" data-i="3"></div>
+          <span class="progress-count" id="progress-count">1 / 4</span>
+        </div>
+        <div class="panel-btns">
+          <a href="#" class="btn btn-ink">Join Team</a>
+          <a href="#" class="btn btn-outline">Philosophy</a>
+        </div>
+      </div>
+
+      <!-- TALL SCROLL CARDS -->
+      <div class="cards-col">
+
+        <div class="teacher-card active" data-index="0">
+          <div class="card-deco-num">01</div>
+          <div class="card-photo"></div>
+          <div class="card-years">8 yrs experience</div>
+          <div class="card-body">
+            <div class="card-tags">
+              <span class="card-tag">Ages 3&ndash;6</span>
+              <span class="card-tag">Phonics</span>
+              <span class="card-tag">Play-based</span>
+            </div>
+            <div class="card-name">Ms. Harlow</div>
+            <div class="card-specialty">Phonics &amp; Early Childhood</div>
+            <div class="card-rule"></div>
+            <div class="card-bio">Expert in phonics and early childhood development. Harlow brings warmth and structure to every lesson, using games and songs to build foundational vocabulary in young learners.</div>
+            <button class="card-link">View full profile &rarr;</button>
+          </div>
+        </div>
+
+        <div class="teacher-card" data-index="1">
+          <div class="card-deco-num">02</div>
+          <div class="card-photo"></div>
+          <div class="card-years">12 yrs experience</div>
+          <div class="card-body">
+            <div class="card-tags">
+              <span class="card-tag">EIKEN</span>
+              <span class="card-tag">Grammar</span>
+              <span class="card-tag">Teen+</span>
+            </div>
+            <div class="card-name">Mr. Tanaka</div>
+            <div class="card-specialty">EIKEN &amp; Advanced Grammar</div>
+            <div class="card-rule"></div>
+            <div class="card-bio">Specializes in EIKEN exam preparation and advanced grammar. His structured, methodical approach has helped hundreds of students pass their certifications with top scores.</div>
+            <button class="card-link">View full profile &rarr;</button>
+          </div>
+        </div>
+
+        <div class="teacher-card" data-index="2">
+          <div class="card-deco-num">03</div>
+          <div class="card-photo"></div>
+          <div class="card-years">6 yrs experience</div>
+          <div class="card-body">
+            <div class="card-tags">
+              <span class="card-tag">Conversation</span>
+              <span class="card-tag">Culture</span>
+              <span class="card-tag">All ages</span>
+            </div>
+            <div class="card-name">Ms. Okafor</div>
+            <div class="card-specialty">Cross-Cultural Communication</div>
+            <div class="card-rule"></div>
+            <div class="card-bio">Focuses on cross-cultural communication and natural conversational English. Students in her classes do not just learn the language &mdash; they learn to think in it.</div>
+            <button class="card-link">View full profile &rarr;</button>
+          </div>
+        </div>
+
+        <div class="teacher-card" data-index="3">
+          <div class="card-deco-num">04</div>
+          <div class="card-photo"></div>
+          <div class="card-years">5 yrs experience</div>
+          <div class="card-body">
+            <div class="card-tags">
+              <span class="card-tag">Toddlers</span>
+              <span class="card-tag">Music</span>
+              <span class="card-tag">Movement</span>
+            </div>
+            <div class="card-name">Mr. Ellis</div>
+            <div class="card-specialty">Music &amp; Movement</div>
+            <div class="card-rule"></div>
+            <div class="card-bio">Brings contagious energy and music into the classroom. The go-to teacher for active toddler classes, Ellis turns every lesson into a performance that kids actually remember.</div>
+            <button class="card-link">View full profile &rarr;</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STUDENTS FIRST ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="grid students-grid">
+      <div class="mod mod-ink mod-students-text">
+        <div class="mod-label">Students First</div>
+        <div class="students-h2">Your children are our <em>number one priority</em></div>
+        <div class="students-sub">We strive to give the best English lessons tailored to each student 100% of the time.</div>
+        <div class="students-stats">
+          <div>
+            <div class="students-stat-num">1,000<span>+</span></div>
+            <div class="students-stat-label">Happy students have learned English with us</div>
+          </div>
+          <div>
+            <div class="students-stat-num">500<span>+</span></div>
+            <div class="students-stat-label">Satisfied parents</div>
+          </div>
+          <div>
+            <div class="students-stat-num">10,000<span>+</span></div>
+            <div class="students-stat-label">Hours teaching English</div>
+          </div>
+        </div>
+      </div>
+      <div class="mod mod-video">
+        <div class="video-play">&#9654;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="mod mod-indigo mod-cta">
+      <div>
+        <div class="cta-h2">Want to teach with <em>Hoshida?</em></div>
+        <div class="cta-p">We are always looking for passionate, experienced educators to join our network.</div>
+      </div>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-cream btn-lg">Apply now</a>
+        <a href="#" class="btn btn-outline-white btn-lg">Learn more</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+var teachers = [
+  { num:'01', name:'Ms. Harlow', specialty:'Phonics &amp; Early Childhood', tags:['Ages 3\u20136','Phonics','Play-based'] },
+  { num:'02', name:'Mr. Tanaka', specialty:'EIKEN &amp; Advanced Grammar', tags:['EIKEN','Grammar','Teen+'] },
+  { num:'03', name:'Ms. Okafor', specialty:'Cross-Cultural Communication', tags:['Conversation','Culture','All ages'] },
+  { num:'04', name:'Mr. Ellis',  specialty:'Music &amp; Movement', tags:['Toddlers','Music','Movement'] }
+];
+
+var cards = document.querySelectorAll('.teacher-card');
+var activeIndex = 0;
+
+function updatePanel(i) {
+  if (i === activeIndex && i !== 0) return;
+  activeIndex = i;
+  var t = teachers[i];
+  document.getElementById('panel-num').textContent = t.num;
+  document.getElementById('panel-name').textContent = t.name;
+  document.getElementById('panel-specialty').innerHTML = t.specialty;
+  document.getElementById('progress-count').textContent = (i+1) + ' / ' + teachers.length;
+  document.getElementById('panel-tags').innerHTML = t.tags.map(function(tag){ return '<span class="panel-tag">'+tag+'</span>'; }).join('');
+  document.querySelectorAll('.progress-dot').forEach(function(dot, di){
+    dot.classList.toggle('active', di === i);
+    dot.style.width = di === i ? '24px' : '7px';
+  });
+  cards.forEach(function(card, ci){ card.classList.toggle('active', ci === i); });
+}
+
+// Click to activate
+cards.forEach(function(card, i){
+  card.addEventListener('click', function(){ updatePanel(i); });
+});
+
+// Scroll to activate
+var observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if (entry.isIntersecting){
+      updatePanel(parseInt(entry.target.getAttribute('data-index')));
+    }
+  });
+}, { threshold: 0.5, rootMargin:'0px 0px -15% 0px' });
+
+cards.forEach(function(card){ observer.observe(card); });
+</script>
+</body>
+</html>
