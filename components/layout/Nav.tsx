@@ -7,8 +7,7 @@ const links = [
   { label: 'Home', href: '/' },
   { label: 'Teachers', href: '/teachers' },
   { label: 'Schools', href: '/schools' },
-  { label: 'Resources', href: '#' },
-  { label: 'Parent News', href: '#' },
+  { label: 'Parent Hub', href: '/parent-hub' },
 ]
 
 export default function Nav() {
@@ -43,12 +42,6 @@ export default function Nav() {
 
         {/* Desktop CTAs */}
         <div className="hidden items-center gap-2.5 md:flex">
-          <Link
-            href="#"
-            className="rounded-pill border border-cream-dark px-5 py-[9px] text-[0.83rem] font-bold text-ink transition-colors hover:border-ink"
-          >
-            Log in
-          </Link>
           <Link
             href="#"
             className="rounded-pill bg-indigo px-5 py-[9px] text-[0.83rem] font-bold text-white transition-colors hover:bg-indigo-dark"
@@ -95,12 +88,6 @@ export default function Nav() {
             })}
           </ul>
           <div className="mt-4 flex gap-2">
-            <Link
-              href="#"
-              className="rounded-pill border border-cream-dark px-5 py-2 text-[0.83rem] font-bold text-ink"
-            >
-              Log in
-            </Link>
             <Link
               href="#"
               className="rounded-pill bg-indigo px-5 py-2 text-[0.83rem] font-bold text-white"

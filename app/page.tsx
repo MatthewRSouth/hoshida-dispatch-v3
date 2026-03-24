@@ -167,7 +167,7 @@ export default function Home() {
                   key={i}
                   className={`relative rounded-[16px] border p-7 ${
                     step.variant === 'cream'
-                      ? 'border-cream-dark bg-cream'
+                      ? 'border-cream-dark bg-indigo-light'
                       : step.variant === 'terra'
                       ? 'border-terra-dark bg-terra'
                       : 'border-cream-dark bg-white'
@@ -175,7 +175,7 @@ export default function Home() {
                 >
                   <div
                     className={`mb-3.5 font-serif text-[3rem] leading-none ${
-                      step.variant === 'terra' ? 'text-white/20' : 'text-cream-dark'
+                      step.variant === 'terra' ? 'text-white/20' : step.variant === 'cream' ? 'text-indigo/25' : 'text-cream-dark'
                     }`}
                   >
                     {step.num}
@@ -238,7 +238,7 @@ export default function Home() {
               {/* Photo placeholder */}
               <div className="rounded-[16px] border border-grey-border bg-grey min-h-[200px]" />
               {/* Point 2 */}
-              <div className="rounded-[16px] border border-cream-dark bg-cream p-7">
+              <div className="rounded-[16px] border border-cream-dark bg-indigo-light p-7">
                 <div className="mb-2 font-serif text-[1.1rem] text-ink">Interactive learning</div>
                 <p className="text-[0.83rem] leading-relaxed text-muted">
                   Lessons are built around conversation, activity, and participation. Students learn by doing, not by watching or listening passively.
@@ -264,7 +264,7 @@ export default function Home() {
                     stat.variant === 'indigo'
                       ? 'border-indigo-dark bg-indigo'
                       : stat.variant === 'cream'
-                      ? 'border-cream-dark bg-cream'
+                      ? 'border-cream-dark bg-indigo-light'
                       : 'border-cream-dark bg-white'
                   }`}
                 >
@@ -327,7 +327,7 @@ export default function Home() {
                 <div
                   key={i}
                   className={`flex flex-col gap-3.5 rounded-[16px] border p-7 ${
-                    t.variant === 'cream' ? 'border-cream-dark bg-cream' : 'border-cream-dark bg-white'
+                    t.variant === 'cream' ? 'border-cream-dark bg-indigo-light' : 'border-cream-dark bg-white'
                   }`}
                 >
                   <div className="text-[0.8rem] tracking-[2px] text-terra">★★★★★</div>
@@ -382,7 +382,7 @@ export default function Home() {
                 </p>
               </div>
               {/* Point 2 */}
-              <div className="rounded-[16px] border border-cream-dark bg-cream p-7">
+              <div className="rounded-[16px] border border-cream-dark bg-indigo-light p-7">
                 <div className="mb-3 text-[1.6rem]">✅</div>
                 <div className="mb-1.5 font-serif text-[1.05rem] text-ink">Real results</div>
                 <p className="text-[0.82rem] leading-relaxed text-muted">
@@ -416,7 +416,7 @@ export default function Home() {
                 </a>
               </div>
               {/* Accordion */}
-              <div className="rounded-[16px] border border-cream-dark bg-cream p-7">
+              <div className="rounded-[16px] border border-cream-dark bg-indigo-light p-7">
                 <FaqAccordion />
               </div>
             </div>

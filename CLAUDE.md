@@ -26,7 +26,7 @@ The site is built as **static HTML pages** with inline CSS and vanilla JavaScrip
 These share a nav, footer, and design system. They target **school administrators** considering hiring Hoshida for English instruction.
 
 ### Parent Hub (parent-hub-v2)
-A separate section for **parents of enrolled children**. It provides dispatch information: weekly bus schedules, service announcements, route status, and quick contacts. It uses the same design system as the marketing pages (same fonts, colours, module patterns) but has its own layout — no shared nav or footer with the marketing site. The title in the HTML still says "KinderRide" but this should be updated to "Hoshida Dispatch" or "Parent Hub" — KinderRide is not a brand we are using.
+A section for **parents of enrolled children**. It provides dispatch information: weekly bus schedules, service announcements, route status, and quick contacts. It uses the shared `<Nav />` and `<Footer />` from the marketing pages, plus the same design system (fonts, colours, module patterns). The inner content uses a dashboard-style 2-column module grid rather than the marketing page section layout.
 
 ---
 
@@ -76,7 +76,7 @@ All images currently use flat grey placeholder boxes (`background: var(--grey); 
 ## Shared Components
 
 ### Navigation (marketing pages only)
-Sticky nav with frosted glass background (`rgba(250,237,202,0.95)` + `backdrop-filter: blur(10px)`). Links: Home, Teachers, Schools, Resources, Parent News. CTA buttons: Log in (ghost), Apply (primary). Logo: "Hoshida Dispatch" with a terra-coloured dot.
+Sticky nav with frosted glass background (`rgba(250,237,202,0.95)` + `backdrop-filter: blur(10px)`). Links: Home, Teachers, Schools, Parent Hub. CTA buttons: Log in (ghost), Apply (primary). Logo: "Hoshida Dispatch" with a terra-coloured dot.
 
 ### Footer (marketing pages only)
 Dark (`--ink`) footer with 4-column layout: Brand, For Schools, Company, Contact. Legal links at bottom.
@@ -109,7 +109,6 @@ Has its own self-contained layout. No shared nav or footer with the marketing pa
 - [ ] Consolidate shared CSS into a single stylesheet (nav, footer, buttons, grid, modules, typography)
 - [ ] Extract shared nav and footer into reusable partials or components
 - [ ] Replace grey image placeholders with real photos
-- [ ] Add a Resources page
 - [ ] Add a Parent News page (linked from marketing nav)
 - [ ] Mobile responsiveness pass — current breakpoints are basic
 
