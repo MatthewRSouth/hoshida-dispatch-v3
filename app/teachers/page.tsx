@@ -92,9 +92,11 @@ export default function TeachersPage() {
                   Children make choices based on individual abilities and aspirations. Our teachers bring that same spirit to every lesson.
                 </p>
               </div>
-              {/* Video placeholder */}
-              <div className="rounded-[16px] border border-grey-border bg-grey min-h-[380px] md:row-span-2 flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full bg-white/80 flex items-center justify-center text-[1.3rem] cursor-pointer transition-transform hover:scale-[1.08]">
+              {/* Photo with play overlay */}
+              <div className="relative rounded-[16px] overflow-hidden min-h-[380px] md:row-span-2 flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/firetruck.PNG" alt="Students on a field trip" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="relative z-10 w-14 h-14 rounded-full bg-white/80 flex items-center justify-center text-[1.3rem] cursor-pointer transition-transform hover:scale-[1.08]">
                   ▶
                 </div>
               </div>
@@ -163,11 +165,20 @@ export default function TeachersPage() {
                   ))}
                 </div>
               </div>
-              {/* Banner image placeholders */}
+              {/* Photos */}
               <div className="flex flex-col gap-4">
-                <div className="rounded-[16px] border border-grey-border bg-grey min-h-[140px]" />
-                <div className="rounded-[16px] border border-grey-border bg-grey min-h-[140px]" />
-                <div className="rounded-[16px] border border-grey-border bg-grey min-h-[140px]" />
+                <div className="h-[260px] w-full overflow-hidden rounded-[16px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/Harry.png" alt="Young student" className="h-full w-full object-cover object-[50%_30%]" />
+                </div>
+                <div className="h-[260px] w-full overflow-hidden rounded-[16px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/exercise-park.jpg" alt="Children playing at the park" className="h-full w-full object-cover object-[50%_40%]" />
+                </div>
+                <div className="h-[260px] w-full overflow-hidden rounded-[16px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/rosa.JPG" alt="Student in library" className="h-full w-full object-cover object-[50%_55%]" />
+                </div>
               </div>
             </div>
           </div>

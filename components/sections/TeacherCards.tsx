@@ -127,10 +127,13 @@ export default function TeacherCards() {
 
               {/* Photo circle */}
               <div
-                className={`absolute top-7 left-10 w-[72px] h-[72px] rounded-full bg-grey border-2 transition-colors duration-300 ${
+                className={`absolute top-7 left-10 w-[72px] h-[72px] rounded-full overflow-hidden border-2 transition-colors duration-300 ${
                   isActive ? 'border-indigo' : 'border-grey-border'
                 }`}
-              />
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={teacher.photo} alt={teacher.name} className="w-full h-full object-cover" />
+              </div>
 
               {/* Years badge */}
               <div

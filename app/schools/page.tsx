@@ -56,8 +56,9 @@ export default function SchoolsPage() {
                 </div>
               </div>
 
-              {/* Photo placeholder */}
-              <div className="min-h-[280px] rounded-[16px] border border-grey-border bg-grey md:min-h-0" />
+              {/* Photo */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/field-trip.PNG" alt="Teachers with students on a field trip" className="min-h-[280px] rounded-[16px] object-cover w-full md:min-h-0" />
             </div>
           </div>
         </section>
@@ -166,12 +167,9 @@ export default function SchoolsPage() {
                 </div>
               </div>
 
-              {/* Visual placeholder */}
-              <div className="flex min-h-[340px] items-center justify-center rounded-[16px] border border-grey-border bg-grey">
-                <span className="text-[0.75rem] font-bold uppercase tracking-[0.5px] text-grey-border">
-                  Feature animation
-                </span>
-              </div>
+              {/* Photo */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/potatoe.PNG" alt="Students and teachers working together outdoors" className="min-h-[340px] rounded-[16px] object-cover w-full" />
             </div>
           </div>
         </section>

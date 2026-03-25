@@ -226,8 +226,11 @@ export default function Home() {
                   We draw from the Dutch Montessori approach. Children make choices based on individual abilities and aspirations. Our teachers bring that same philosophy to English language learning.
                 </p>
               </div>
-              {/* Photo placeholder */}
-              <div className="rounded-[16px] border border-grey-border bg-grey min-h-[200px]" />
+              {/* Photo */}
+              <div className="h-[280px] w-full overflow-hidden rounded-[16px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/pe.PNG" alt="Students in PE class" className="h-full w-full object-cover object-center" />
+              </div>
               {/* Point 1 */}
               <div className="rounded-[16px] border border-cream-dark bg-white p-7">
                 <div className="mb-2 font-serif text-[1.1rem] text-ink">We guide children</div>
@@ -235,8 +238,11 @@ export default function Home() {
                   Teachers support each student&apos;s natural curiosity. Rather than directing every moment, we create the conditions for language to emerge organically.
                 </p>
               </div>
-              {/* Photo placeholder */}
-              <div className="rounded-[16px] border border-grey-border bg-grey min-h-[200px]" />
+              {/* Photo */}
+              <div className="h-[280px] w-full overflow-hidden rounded-[16px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/exercise-park.jpg" alt="Children at the park" className="h-full w-full object-cover object-[50%_30%]" />
+              </div>
               {/* Point 2 */}
               <div className="rounded-[16px] border border-cream-dark bg-indigo-light p-7">
                 <div className="mb-2 font-serif text-[1.1rem] text-ink">Interactive learning</div>
