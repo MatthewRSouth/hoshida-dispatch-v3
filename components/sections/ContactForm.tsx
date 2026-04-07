@@ -6,7 +6,7 @@ type Status = 'idle' | 'loading' | 'success' | 'error'
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
-  const [form, setForm] = useState({ name: '', email: '', school: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', school: '', message: '', website: '' })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -28,10 +28,8 @@ export default function ContactForm() {
       if (!res.ok) {
         setStatus('error')
         setErrorMsg(data.error || 'Something went wrong. Please try again.')
-        console.log('Resend response:', res.status, data)
       } else {
         setStatus('success')
-        console.log('Resend response:', res.status, data)
       }
     } catch {
       setStatus('error')
@@ -55,6 +53,17 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+      {/* Honeypot — visually hidden, bots fill it in, humans don't */}
+      <input
+        name="website"
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={form.website}
+        onChange={handleChange}
+        className="sr-only"
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <input
           name="name"

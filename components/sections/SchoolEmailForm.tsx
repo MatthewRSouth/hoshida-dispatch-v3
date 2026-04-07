@@ -5,6 +5,7 @@ type Status = 'idle' | 'loading' | 'success' | 'error'
 
 export default function SchoolEmailForm() {
   const [email, setEmail] = useState('')
+  const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -21,6 +22,7 @@ export default function SchoolEmailForm() {
           name: 'Schools page enquiry',
           email,
           message: 'Submitted via Schools page CTA form',
+          website: honeypot,
         }),
       })
       const data = await res.json()
@@ -48,6 +50,17 @@ export default function SchoolEmailForm() {
   return (
     <div className="flex flex-col gap-2">
       <form onSubmit={handleSubmit} className="flex flex-wrap gap-2.5 items-center">
+        {/* Honeypot — visually hidden, bots fill it in, humans don't */}
+        <input
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          className="sr-only"
+        />
         <input
           type="email"
           required

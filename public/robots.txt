@@ -1,0 +1,9 @@
+User-agent: *
+# Public marketing pages are crawlable
+Allow: /
+Allow: /teachers
+Allow: /schools
+
+# Parent Hub contains school-specific schedule and contact data.
+# It is not intended for public search indexing.
+Disallow: /parent-hub

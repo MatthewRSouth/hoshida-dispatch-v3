@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'Parent Hub — Hoshida Dispatch',
   description:
     'Lesson updates and announcements for parents of enrolled children at 念法幼稚園.',
+  // Prevent search engines from indexing the parent hub — it contains
+  // school-specific schedule and contact data that should not be publicly indexed.
+  robots: { index: false, follow: false },
 }
 
 const newsItems = [
