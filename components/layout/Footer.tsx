@@ -22,10 +22,15 @@ export default function Footer() {
               For Schools
             </h4>
             <ul className="flex flex-col gap-2 list-none">
-              {['Teaching approach', 'Our programs', 'Apply now', 'Pricing'].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-[0.83rem] text-white/55 no-underline transition-colors hover:text-white">
-                    {item}
+              {[
+                { label: 'Teaching approach', href: '/schools' },
+                { label: 'Our programs', href: '/schools' },
+                { label: 'Apply now', href: '/#contact' },
+                { label: 'Pricing', href: '/schools#cta' },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-[0.83rem] text-white/55 no-underline transition-colors hover:text-white">
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -38,10 +43,14 @@ export default function Footer() {
               Company
             </h4>
             <ul className="flex flex-col gap-2 list-none">
-              {['About us', 'Teacher info', 'FAQ'].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-[0.83rem] text-white/55 no-underline transition-colors hover:text-white">
-                    {item}
+              {[
+                { label: 'About us', href: '#' },
+                { label: 'Teacher info', href: '/teachers' },
+                { label: 'FAQ', href: '/#contact' },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-[0.83rem] text-white/55 no-underline transition-colors hover:text-white">
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -54,13 +63,21 @@ export default function Footer() {
               Contact
             </h4>
             <ul className="flex flex-col gap-2 list-none">
-              {['Parent news', 'contact@hoshidadispatch.com', '070-1877-7490'].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-[0.83rem] text-white/55 no-underline transition-colors hover:text-white">
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/parent-hub" className="text-[0.83rem] text-white/55 no-underline transition-colors hover:text-white">
+                  Parent Hub
+                </Link>
+              </li>
+              <li>
+                <a href="mailto:contact@hoshidadispatch.com" className="text-[0.83rem] text-white/55 no-underline transition-colors hover:text-white">
+                  contact@hoshidadispatch.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:070-1877-7490" className="text-[0.83rem] text-white/55 no-underline transition-colors hover:text-white">
+                  070-1877-7490
+                </a>
+              </li>
             </ul>
           </div>
         </div>

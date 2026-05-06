@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
 import SchoolEmailForm from '@/components/sections/SchoolEmailForm'
+import { GraduationCap, Sparkles, BookOpen, MessageCircle, Search, Rocket, Tag, Check, Star } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'For Schools — Hoshida Dispatch',
@@ -19,7 +21,7 @@ export default function SchoolsPage() {
         <section className="px-[5vw] pt-10">
           <div className="mx-auto max-w-site">
             <div className="mb-3 flex items-center gap-1.5 text-[0.75rem] font-semibold text-muted">
-              <a href="/" className="text-muted no-underline transition-colors hover:text-ink">Home</a>
+              <Link href="/" className="text-muted no-underline transition-colors hover:text-ink">Home</Link>
               <span className="opacity-50">/</span>
               <span>For Schools</span>
             </div>
@@ -77,20 +79,20 @@ export default function SchoolsPage() {
             <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
               {[
                 {
-                  icon: '💪',
+                  Icon: GraduationCap,
                   title: 'Qualified educators',
                   body: 'Every teacher is vetted through Hoshida International School. Proven classroom experience with young learners, every time.',
                   variant: 'white',
                 },
                 {
-                  icon: '🎮',
+                  Icon: Sparkles,
                   label: 'Our approach',
                   title: 'Interactive learning',
                   body: 'Lessons built on genuine interaction and play. We teach English through conversation, games, and natural learning moments.',
                   variant: 'indigo',
                 },
                 {
-                  icon: '📋',
+                  Icon: BookOpen,
                   title: 'Adapts to your school',
                   body: 'Your curriculum and schedule guides our approach. Teachers work with your existing structure and goals, not against them.',
                   variant: 'white',
@@ -109,7 +111,9 @@ export default function SchoolsPage() {
                       {card.label}
                     </div>
                   )}
-                  <div className="text-[1.8rem]">{card.icon}</div>
+                  <div className={card.variant === 'indigo' ? 'text-white/70' : 'text-indigo'}>
+                    <card.Icon size={28} />
+                  </div>
                   <div className={`font-serif text-[1.15rem] ${card.variant === 'indigo' ? 'text-white' : 'text-ink'}`}>
                     {card.title}
                   </div>
@@ -199,7 +203,7 @@ export default function SchoolsPage() {
               {/* Step 1 */}
               <div className="flex min-h-[220px] flex-col rounded-[16px] border border-cream-dark bg-white p-8">
                 <div className="mb-4 font-serif text-[3.2rem] leading-none text-cream-dark">01</div>
-                <div className="mb-3.5 text-[1.6rem]">⭐</div>
+                <div className="mb-3.5 text-indigo"><MessageCircle size={26} /></div>
                 <div className="mb-2 font-serif text-[1.15rem] text-ink">You reach out</div>
                 <div className="text-[0.83rem] leading-[1.6] text-muted">
                   Contact us about your school&apos;s needs and what you&apos;re looking for in English instruction. We listen first, then act.
@@ -209,7 +213,7 @@ export default function SchoolsPage() {
               {/* Step 2 */}
               <div className="flex min-h-[220px] flex-col rounded-[16px] border border-cream-dark bg-indigo-light p-8">
                 <div className="mb-4 font-serif text-[3.2rem] leading-none text-indigo/25">02</div>
-                <div className="mb-3.5 text-[1.6rem]">📋</div>
+                <div className="mb-3.5 text-indigo"><Search size={26} /></div>
                 <div className="mb-2 font-serif text-[1.15rem] text-ink">We find your teacher</div>
                 <div className="text-[0.83rem] leading-[1.6] text-muted">
                   We select a teacher whose experience and style align with your curriculum and goals. The right match matters.
@@ -219,7 +223,7 @@ export default function SchoolsPage() {
               {/* Step 3 */}
               <div className="flex min-h-[220px] flex-col rounded-[16px] border border-terra-dark bg-terra p-8">
                 <div className="mb-4 font-serif text-[3.2rem] leading-none text-white/25">03</div>
-                <div className="mb-3.5 text-[1.6rem]">📱</div>
+                <div className="mb-3.5 text-white/80"><Rocket size={26} /></div>
                 <div className="mb-2 font-serif text-[1.15rem] text-white">Lessons begin</div>
                 <div className="text-[0.83rem] leading-[1.6] text-white/75">
                   Your teacher arrives prepared and ready to engage your students from day one. No disruption, only improvement.
@@ -249,7 +253,7 @@ export default function SchoolsPage() {
               {/* Centre card */}
               <div className="flex flex-col rounded-[16px] border border-cream-dark bg-white p-10">
                 <div className="mb-5 inline-flex w-fit items-center gap-1.5 rounded-pill bg-terra px-3.5 py-[5px] text-[0.72rem] font-bold tracking-[0.5px] text-white">
-                  💰 Pricing
+                  <Tag size={11} /> Pricing
                 </div>
                 <h3 className="mb-2.5 font-serif text-[1.8rem] leading-[1.2] text-ink">Competitive pricing</h3>
                 <p className="mb-7 text-[0.88rem] leading-[1.6] text-muted">
@@ -260,13 +264,13 @@ export default function SchoolsPage() {
                 </div>
                 <ul className="mb-7 flex flex-col gap-2.5">
                   {[
-                    'Competitive pricing',
-                    'World class teachers',
-                    'Thousands of happy children with bright futures',
+                    'Flexible programs to suit your school\'s schedule',
+                    'Same teacher placed consistently for student continuity',
+                    'No disruption — teachers integrate with your curriculum',
                   ].map((item) => (
                     <li key={item} className="flex items-center gap-2.5 text-[0.85rem] font-medium text-ink">
-                      <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border border-indigo bg-indigo-light text-[0.65rem] text-indigo-dark">
-                        ✓
+                      <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border border-indigo bg-indigo-light text-indigo-dark">
+                        <Check size={11} strokeWidth={2.5} />
                       </span>
                       {item}
                     </li>
@@ -303,24 +307,18 @@ export default function SchoolsPage() {
             <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
               {[
                 {
-                  quote: '"The teachers arrived prepared and genuinely interested in our students. The lessons felt natural, not forced."',
-                  initials: 'MT',
-                  name: 'Maria Tanaka',
-                  role: 'Director, Sakura Kindergarten',
+                  quote: '他のインターをいろいろ見たけど、この園の先生たちの雰囲気、教え方などすべての面において最高です！兄妹で園に通わせていて、家でも兄妹で英語を使い、彼らの英語力は素晴らしいです！',
+                  role: '保護者のコメント',
                   variant: 'white',
                 },
                 {
-                  quote: '"Our children ask for English lessons now. That tells you everything about the quality of teaching."',
-                  initials: 'KY',
-                  name: 'Kenji Yamamoto',
-                  role: 'Principal, Sunrise Academy',
+                  quote: '私、3歳やけど年中クラスやで！それに、もう本も読めるで！誰か読書対決したい！？さあ、やろう！。',
+                  role: '生徒のコメント',
                   variant: 'cream',
                 },
                 {
-                  quote: '"They understood our curriculum and worked within it. No disruption, only improvement."',
-                  initials: 'YS',
-                  name: 'Yuki Sato',
-                  role: 'Head Teacher, Bright Minds',
+                  quote: '今まで働いた園の中で、一番星田インターが子供たちが楽しく過ごしていて、毎日子供たち、先生たちの笑顔が絶えません。そんな楽しい環境だからこそ英語力も知らないうちに身につくんです',
+                  role: '保育士のコメント',
                   variant: 'ink',
                 },
               ].map((t, i) => (
@@ -334,18 +332,14 @@ export default function SchoolsPage() {
                       : 'border-cream-dark bg-white'
                   }`}
                 >
-                  <div className="text-[0.85rem] tracking-[2px] text-terra">★★★★★</div>
-                  <div className={`flex-1 font-serif text-[1.02rem] leading-[1.5] ${t.variant === 'ink' ? 'text-white' : 'text-ink'}`}>
+                  <div className="flex gap-0.5 text-terra">
+                    {[...Array(5)].map((_, i) => <Star key={i} size={13} fill="currentColor" strokeWidth={0} />)}
+                  </div>
+                  <div className={`flex-1 font-serif text-[1.02rem] leading-[1.6] ${t.variant === 'ink' ? 'text-white' : 'text-ink'}`}>
                     {t.quote}
                   </div>
-                  <div className={`flex items-center gap-2.5 border-t pt-3 ${t.variant === 'ink' ? 'border-white/12' : 'border-cream'}`}>
-                    <div className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-[0.82rem] font-bold ${t.variant === 'ink' ? 'bg-white/10 text-white/60' : 'bg-cream-dark text-muted'}`}>
-                      {t.initials}
-                    </div>
-                    <div>
-                      <div className={`text-[0.8rem] font-bold ${t.variant === 'ink' ? 'text-white' : 'text-ink'}`}>{t.name}</div>
-                      <div className={`text-[0.72rem] ${t.variant === 'ink' ? 'text-white/45' : 'text-muted'}`}>{t.role}</div>
-                    </div>
+                  <div className={`border-t pt-3 ${t.variant === 'ink' ? 'border-white/12' : 'border-cream'}`}>
+                    <div className={`text-[0.78rem] font-semibold ${t.variant === 'ink' ? 'text-white/55' : 'text-muted'}`}>{t.role}</div>
                   </div>
                 </div>
               ))}

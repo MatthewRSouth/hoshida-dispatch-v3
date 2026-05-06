@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
 import TeacherCards from '@/components/sections/TeacherCards'
+import ContactForm from '@/components/sections/ContactForm'
 
 export const metadata: Metadata = {
   title: 'Teachers — Hoshida Dispatch',
@@ -42,7 +43,7 @@ export default function TeachersPage() {
                   Every educator we dispatch is experienced, vetted, and genuinely passionate about working with young learners. Meet the team behind the lessons.
                 </p>
                 <div className="flex flex-wrap gap-2.5">
-                  <a href="#" className="inline-flex items-center rounded-pill bg-terra px-[30px] py-[13px] text-[0.92rem] font-bold text-white transition-colors hover:bg-terra-dark">
+                  <a href="/#contact" className="inline-flex items-center rounded-pill bg-terra px-[30px] py-[13px] text-[0.92rem] font-bold text-white transition-colors hover:bg-terra-dark">
                     Join our team
                   </a>
                   <a href="#" className="inline-flex items-center rounded-pill border border-white/35 px-[30px] py-[13px] text-[0.92rem] font-bold text-white transition-colors hover:border-white">
@@ -92,13 +93,10 @@ export default function TeachersPage() {
                   Children make choices based on individual abilities and aspirations. Our teachers bring that same spirit to every lesson.
                 </p>
               </div>
-              {/* Photo with play overlay */}
-              <div className="relative rounded-[16px] overflow-hidden min-h-[380px] md:row-span-2 flex items-center justify-center">
+              {/* Photo */}
+              <div className="rounded-[16px] overflow-hidden min-h-[380px] md:row-span-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/firetruck.PNG" alt="Students on a field trip" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="relative z-10 w-14 h-14 rounded-full bg-white/80 flex items-center justify-center text-[1.3rem] cursor-pointer transition-transform hover:scale-[1.08]">
-                  ▶
-                </div>
+                <img src="/images/firetruck.PNG" alt="Students on a field trip" className="w-full h-full object-cover" />
               </div>
               {/* Point 1 */}
               <div className="rounded-[16px] border border-cream-dark bg-white p-7">
@@ -185,25 +183,29 @@ export default function TeachersPage() {
         </section>
 
         {/* ── CTA ── */}
-        <section className="px-[5vw] pt-4 pb-[60px]">
+        <section id="contact" className="px-[5vw] pt-4 pb-[60px]">
           <div className="mx-auto max-w-site">
-            <div className="relative overflow-hidden rounded-[16px] border border-indigo-dark bg-indigo px-14 py-12 flex flex-wrap items-center justify-between gap-8">
-              <div className="pointer-events-none absolute -right-10 -top-10 w-[250px] h-[250px] rounded-full bg-indigo-dark opacity-30" />
-              <div>
-                <h2 className="font-serif text-[2rem] leading-[1.2] text-white">
-                  Want to teach with <em className="italic text-cream">Hoshida?</em>
-                </h2>
-                <p className="mt-2 text-[0.88rem] text-white/55 leading-relaxed">
-                  We are always looking for passionate, experienced educators to join our network.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2.5 relative z-10">
-                <a href="#" className="inline-flex items-center rounded-pill bg-cream px-[30px] py-[13px] text-[0.92rem] font-bold text-ink transition-colors hover:bg-white">
-                  Apply now
-                </a>
-                <a href="#" className="inline-flex items-center rounded-pill border border-white/45 px-[30px] py-[13px] text-[0.92rem] font-bold text-white transition-colors hover:border-white">
-                  Learn more
-                </a>
+            <div className="relative overflow-hidden rounded-[16px] border border-indigo-dark bg-indigo px-14 py-[60px]">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-[250px] w-[250px] rounded-full bg-indigo-dark opacity-30" />
+              <div className="pointer-events-none absolute -bottom-10 left-[30%] h-[200px] w-[200px] rounded-full bg-terra opacity-10" />
+              <div className="relative z-10 grid gap-10 grid-cols-1 lg:grid-cols-2 items-start">
+                <div>
+                  <h2 className="mb-4 font-serif text-[2.4rem] leading-[1.15] text-white max-w-[500px]">
+                    Let&apos;s work <em className="italic text-cream">together</em>
+                  </h2>
+                  <p className="mb-6 text-[0.9rem] leading-[1.65] text-white/60">
+                    Tell us about your school and what you&apos;re looking for in English instruction.
+                  </p>
+                  <div className="flex flex-wrap gap-2.5">
+                    <a href="#contact" className="inline-flex items-center rounded-pill bg-cream px-[30px] py-[13px] text-[0.92rem] font-bold text-ink transition-colors hover:bg-white">
+                      Get started
+                    </a>
+                    <a href="/schools" className="inline-flex items-center rounded-pill border border-white/45 px-[30px] py-[13px] text-[0.92rem] font-bold text-white transition-colors hover:border-white">
+                      For schools
+                    </a>
+                  </div>
+                </div>
+                <ContactForm />
               </div>
             </div>
           </div>

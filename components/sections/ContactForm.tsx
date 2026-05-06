@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { CheckCircle2 } from 'lucide-react'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
@@ -40,7 +41,7 @@ export default function ContactForm() {
   if (status === 'success') {
     return (
       <div className="rounded-[12px] bg-white/10 p-8 text-center text-white">
-        <div className="mb-3 text-[2rem]">✓</div>
+        <CheckCircle2 size={36} className="mx-auto mb-3 text-white/80" />
         <h3 className="mb-2 font-serif text-[1.4rem]">Message sent</h3>
         <p className="text-[0.88rem] text-white/70">
           We&apos;ll be in touch shortly. Thank you for reaching out.

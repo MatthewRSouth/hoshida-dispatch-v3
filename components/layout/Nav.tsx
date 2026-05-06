@@ -43,7 +43,7 @@ export default function Nav() {
         {/* Desktop CTAs */}
         <div className="hidden items-center gap-2.5 md:flex">
           <Link
-            href="#"
+            href="/#contact"
             className="rounded-pill bg-indigo px-5 py-[9px] text-[0.83rem] font-bold text-white transition-colors hover:bg-indigo-dark"
           >
             Apply
@@ -78,7 +78,7 @@ export default function Nav() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className={`text-[0.9rem] font-semibold ${isActive ? 'text-ink font-semibold' : 'text-ink'}`}
+                    className={`text-[0.9rem] font-semibold transition-colors ${isActive ? 'text-ink' : 'text-muted'}`}
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
@@ -89,7 +89,7 @@ export default function Nav() {
           </ul>
           <div className="mt-4 flex gap-2">
             <Link
-              href="#"
+              href="/#contact"
               className="rounded-pill bg-indigo px-5 py-2 text-[0.83rem] font-bold text-white"
             >
               Apply

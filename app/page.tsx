@@ -3,6 +3,7 @@ import Footer from '@/components/layout/Footer'
 import PhotoStrip from '@/components/sections/PhotoStrip'
 import FaqAccordion from '@/components/sections/FaqAccordion'
 import ContactForm from '@/components/sections/ContactForm'
+import { GraduationCap, Sparkles, BookOpen, School, BadgeCheck, Star } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -80,20 +81,20 @@ export default function Home() {
             <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
               {[
                 {
-                  icon: '👩‍🏫',
+                  Icon: GraduationCap,
                   title: 'Qualified Educators',
                   body: 'Every teacher comes from Hoshida International School or has been vetted through our network. Proven classroom experience with young learners.',
                   variant: 'white',
                 },
                 {
-                  icon: '🎮',
+                  Icon: Sparkles,
                   label: 'Our approach',
                   title: 'Engagement-first',
                   body: 'We teach English through play, conversation, and natural learning moments. Lessons built on genuine interaction, not rote repetition.',
-                  variant: 'indigo',
+                  variant: 'white',
                 },
                 {
-                  icon: '📋',
+                  Icon: BookOpen,
                   title: 'Your Curriculum, Our Guide',
                   body: 'Your teaching philosophy and schedule shapes what we do. Teachers work with your existing structure and goals, not against them.',
                   variant: 'white',
@@ -108,11 +109,13 @@ export default function Home() {
                   }`}
                 >
                   {card.label && (
-                    <div className="mb-3 text-[0.65rem] font-bold uppercase tracking-[1.4px] text-white/55">
+                    <div className="mb-3 text-[0.65rem] font-bold uppercase tracking-[1.4px] text-muted">
                       {card.label}
                     </div>
                   )}
-                  <div className="mb-3.5 text-[1.8rem]">{card.icon}</div>
+                  <div className={`mb-3.5 ${card.variant === 'indigo' ? 'text-white/70' : 'text-indigo'}`}>
+                    <card.Icon size={28} />
+                  </div>
                   <div className={`mb-2 font-serif text-[1.2rem] ${card.variant === 'indigo' ? 'text-white' : 'text-ink'}`}>
                     {card.title}
                   </div>
@@ -154,7 +157,7 @@ export default function Home() {
                   num: '03',
                   title: 'Lessons begin',
                   body: 'Your teacher arrives prepared and ready to engage your students from day one.',
-                  variant: 'white',
+                  variant: 'indigo',
                 },
                 {
                   num: '04',
@@ -170,32 +173,34 @@ export default function Home() {
                       ? 'border-cream-dark bg-indigo-light'
                       : step.variant === 'terra'
                       ? 'border-terra-dark bg-terra'
+                      : step.variant === 'indigo'
+                      ? 'border-indigo-dark bg-indigo'
                       : 'border-cream-dark bg-white'
                   }`}
                 >
                   <div
                     className={`mb-3.5 font-serif text-[3rem] leading-none ${
-                      step.variant === 'terra' ? 'text-white/20' : step.variant === 'cream' ? 'text-indigo/25' : 'text-cream-dark'
+                      step.variant === 'terra' ? 'text-white/20' : step.variant === 'indigo' ? 'text-white/20' : step.variant === 'cream' ? 'text-indigo/25' : 'text-cream-dark'
                     }`}
                   >
                     {step.num}
                   </div>
                   <div
                     className={`mb-2 font-serif text-[1.1rem] ${
-                      step.variant === 'terra' ? 'text-white' : 'text-ink'
+                      step.variant === 'terra' || step.variant === 'indigo' ? 'text-white' : 'text-ink'
                     }`}
                   >
                     {step.title}
                   </div>
                   <div
                     className={`text-[0.82rem] leading-relaxed ${
-                      step.variant === 'terra' ? 'text-white/75' : 'text-muted'
+                      step.variant === 'terra' ? 'text-white/75' : step.variant === 'indigo' ? 'text-white/70' : 'text-muted'
                     }`}
                   >
                     {step.body}
                   </div>
                   {i < 3 && (
-                    <span className="absolute right-[-6px] top-7 z-10 text-[1.1rem] text-cream-dark">
+                    <span className={`absolute right-[-6px] top-7 z-10 text-[1.1rem] ${step.variant === 'indigo' ? 'text-indigo-light' : 'text-cream-dark'}`}>
                       →
                     </span>
                   )}
@@ -232,9 +237,9 @@ export default function Home() {
                 <img src="/images/pe.PNG" alt="Students in PE class" className="h-full w-full object-cover object-center" />
               </div>
               {/* Point 1 */}
-              <div className="rounded-[16px] border border-cream-dark bg-white p-7">
-                <div className="mb-2 font-serif text-[1.1rem] text-ink">We guide children</div>
-                <p className="text-[0.83rem] leading-relaxed text-muted">
+              <div className="rounded-[16px] border border-indigo-dark bg-indigo p-7">
+                <div className="mb-2 font-serif text-[1.1rem] text-white">We guide children</div>
+                <p className="text-[0.83rem] leading-relaxed text-white/70">
                   Teachers support each student&apos;s natural curiosity. Rather than directing every moment, we create the conditions for language to emerge organically.
                 </p>
               </div>
@@ -244,9 +249,9 @@ export default function Home() {
                 <img src="/images/exercise-park.jpg" alt="Children at the park" className="h-full w-full object-cover object-[50%_30%]" />
               </div>
               {/* Point 2 */}
-              <div className="rounded-[16px] border border-cream-dark bg-indigo-light p-7">
-                <div className="mb-2 font-serif text-[1.1rem] text-ink">Interactive learning</div>
-                <p className="text-[0.83rem] leading-relaxed text-muted">
+              <div className="rounded-[16px] border border-indigo-dark bg-indigo p-7">
+                <div className="mb-2 font-serif text-[1.1rem] text-white">Interactive learning</div>
+                <p className="text-[0.83rem] leading-relaxed text-white/70">
                   Lessons are built around conversation, activity, and participation. Students learn by doing, not by watching or listening passively.
                 </p>
               </div>
@@ -259,15 +264,17 @@ export default function Home() {
           <div className="mx-auto max-w-site">
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               {[
-                { num: '1,000', accent: '+', label: 'Happy students', variant: 'white' },
-                { num: '500', accent: '+', label: 'Satisfied parents', variant: 'cream' },
-                { num: '10k', accent: '+', label: 'Hours teaching English', variant: 'white' },
-                { num: '100', accent: '%', label: 'Student-centred approach', variant: 'indigo' },
+                { num: '1,000', accent: '+', label: 'Happy students', variant: 'ink' },
+                { num: '500', accent: '+', label: 'Satisfied parents', variant: 'ink' },
+                { num: '10k', accent: '+', label: 'Hours teaching English', variant: 'ink' },
+                { num: '100', accent: '%', label: 'Student-centred approach', variant: 'ink' },
               ].map((stat, i) => (
                 <div
                   key={i}
                   className={`rounded-[16px] border p-7 text-center ${
-                    stat.variant === 'indigo'
+                    stat.variant === 'ink'
+                      ? 'border-[#1a1c2e] bg-ink'
+                      : stat.variant === 'indigo'
                       ? 'border-indigo-dark bg-indigo'
                       : stat.variant === 'cream'
                       ? 'border-cream-dark bg-indigo-light'
@@ -276,17 +283,17 @@ export default function Home() {
                 >
                   <span
                     className={`block font-serif text-[2.8rem] leading-none mb-1.5 ${
-                      stat.variant === 'indigo' ? 'text-white' : 'text-ink'
+                      stat.variant === 'ink' || stat.variant === 'indigo' ? 'text-white' : 'text-ink'
                     }`}
                   >
                     {stat.num}
-                    <span className={stat.variant === 'indigo' ? 'text-white/50' : 'text-terra'}>
+                    <span className={stat.variant === 'ink' || stat.variant === 'indigo' ? 'text-terra' : 'text-terra'}>
                       {stat.accent}
                     </span>
                   </span>
                   <div
                     className={`text-[0.82rem] font-medium ${
-                      stat.variant === 'indigo' ? 'text-white/65' : 'text-muted'
+                      stat.variant === 'ink' || stat.variant === 'indigo' ? 'text-white/65' : 'text-muted'
                     }`}
                   >
                     {stat.label}
@@ -336,7 +343,9 @@ export default function Home() {
                     t.variant === 'cream' ? 'border-cream-dark bg-indigo-light' : 'border-cream-dark bg-white'
                   }`}
                 >
-                  <div className="text-[0.8rem] tracking-[2px] text-terra">★★★★★</div>
+                  <div className="flex gap-0.5 text-terra">
+                    {[...Array(5)].map((_, i) => <Star key={i} size={13} fill="currentColor" strokeWidth={0} />)}
+                  </div>
                   <div className="flex-1 font-serif text-[1.02rem] leading-[1.5] text-ink">
                     {t.quote}
                   </div>
@@ -381,15 +390,15 @@ export default function Home() {
               </div>
               {/* Point 1 */}
               <div className="rounded-[16px] border border-cream-dark bg-white p-7">
-                <div className="mb-3 text-[1.6rem]">🏫</div>
+                <div className="mb-3 text-indigo"><School size={26} /></div>
                 <div className="mb-1.5 font-serif text-[1.05rem] text-ink">Proven foundation</div>
                 <p className="text-[0.82rem] leading-relaxed text-muted">
                   Hoshida International School knows what works with young learners and that knowledge powers every dispatch placement.
                 </p>
               </div>
               {/* Point 2 */}
-              <div className="rounded-[16px] border border-cream-dark bg-indigo-light p-7">
-                <div className="mb-3 text-[1.6rem]">✅</div>
+              <div className="rounded-[16px] border border-cream-dark bg-white p-7">
+                <div className="mb-3 text-indigo"><BadgeCheck size={26} /></div>
                 <div className="mb-1.5 font-serif text-[1.05rem] text-ink">Real results</div>
                 <p className="text-[0.82rem] leading-relaxed text-muted">
                   Schools trust us because we have earned it through years of consistent, high-quality teaching outcomes.
@@ -422,7 +431,7 @@ export default function Home() {
                 </a>
               </div>
               {/* Accordion */}
-              <div className="rounded-[16px] border border-cream-dark bg-indigo-light p-7">
+              <div className="rounded-[16px] border border-terra bg-terra-light p-7">
                 <FaqAccordion />
               </div>
             </div>

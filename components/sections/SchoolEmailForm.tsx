@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { CheckCircle2 } from 'lucide-react'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
@@ -42,7 +43,8 @@ export default function SchoolEmailForm() {
   if (status === 'success') {
     return (
       <p className="text-[0.9rem] font-medium text-white/90">
-        ✓ Thanks — we&apos;ll be in touch soon.
+        <CheckCircle2 size={16} className="inline-block mr-1.5 align-middle" />
+        Thanks — we&apos;ll be in touch soon.
       </p>
     )
   }
@@ -66,7 +68,7 @@ export default function SchoolEmailForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Your school&apos;s email address"
+          placeholder="Your school's email address"
           className="min-w-[240px] rounded-pill border border-white/25 bg-white/10 px-5 py-[13px] text-[0.85rem] text-white placeholder-white/40 outline-none transition-colors focus:border-white/60"
         />
         <button

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
+import { School, User, Mail, Phone } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Parent Hub — Hoshida Dispatch',
@@ -113,8 +114,8 @@ export default function ParentHubPage() {
               </div>
               <div className="flex flex-col gap-2.5 border-t border-cream pt-4">
                 <div className="flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[8px] border border-cream-dark bg-cream text-[0.9rem]">
-                    🏫
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[8px] border border-cream-dark bg-cream text-muted">
+                    <School size={15} />
                   </div>
                   <div>
                     <span className="block text-[0.72rem] font-semibold uppercase tracking-[0.8px] text-muted">School</span>
@@ -122,8 +123,8 @@ export default function ParentHubPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[8px] border border-cream-dark bg-cream text-[0.9rem]">
-                    👤
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[8px] border border-cream-dark bg-cream text-muted">
+                    <User size={15} />
                   </div>
                   <div>
                     <span className="block text-[0.72rem] font-semibold uppercase tracking-[0.8px] text-muted">Teacher</span>
@@ -162,8 +163,8 @@ export default function ParentHubPage() {
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-3 py-3 border-b border-cream">
-                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] border border-cream-dark bg-cream text-[1rem]">
-                    ✉
+                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] border border-cream-dark bg-cream text-muted">
+                    <Mail size={16} />
                   </div>
                   <div>
                     <strong className="block text-[0.82rem] font-semibold text-ink">Email</strong>
@@ -171,8 +172,8 @@ export default function ParentHubPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3 py-3">
-                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] border border-cream-dark bg-cream text-[1rem]">
-                    📞
+                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] border border-cream-dark bg-cream text-muted">
+                    <Phone size={16} />
                   </div>
                   <div>
                     <strong className="block text-[0.82rem] font-semibold text-ink">Phone</strong>
