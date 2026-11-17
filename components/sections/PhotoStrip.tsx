@@ -1,6 +1,11 @@
 'use client'
 
 const photos = [
+  { src: '/images/halloween-group-photo.jpg', alt: 'Teacher and students in Halloween costumes' },
+  { src: '/images/halloween-spider-game.jpg', alt: 'Halloween spider web game' },
+  { src: '/images/halloween-teacher-puzzle.jpg', alt: 'Teacher and student doing a puzzle' },
+  { src: '/images/halloween-blindfold-game.jpg', alt: 'Blindfold matching game' },
+  { src: '/images/halloween-trick-or-treat.jpg', alt: 'Trick-or-treating in costume' },
   { src: '/images/exercise-park.jpg', alt: 'Children at the park' },
   { src: '/images/Harry.png', alt: 'Young student' },
   { src: '/images/field-trip.PNG', alt: 'Class field trip' },
