@@ -2,161 +2,153 @@
 
 ## Project Overview
 
-Hoshida Dispatch is a company based in Katano, Osaka that sends qualified English teachers to kindergartens across Japan. This repo contains the full marketing website and a parent-facing hub where parents of enrolled children can view dispatch schedules, news, route status, and contact information.
+Hoshida Dispatch is a company based in Katano, Osaka that sends qualified English teachers to kindergartens across Japan. **Hoshida International School** is the parent organisation. This is a real business.
 
-The site is built as **static HTML pages** with inline CSS and vanilla JavaScript. No build tools, no frameworks — just clean, self-contained HTML files.
+This repo is the marketing website plus a parent-facing **Parent Hub** for families at partner kindergartens (currently 念法幼稚園 / Nenpo Kindergarten).
+
+**Audiences:**
+1. Japanese kindergartens considering hiring teachers (homepage, schools, teachers pages)
+2. Parents of children already taught by Hoshida teachers (parent hub)
+
+---
+
+## Tech Stack
+
+- **Next.js 14** (App Router) + **React 18** + **TypeScript** (strict)
+- **Tailwind CSS 3** — design tokens live in `tailwind.config.ts`
+- **Fonts:** DM Serif Display + DM Sans via `next/font/google` (`app/layout.tsx`), exposed as `font-serif` / `font-sans`
+- **Icons:** `lucide-react`
+- **Email:** Resend, via the `/api/contact` route
+- **Hosting:** Vercel
+
+### Commands
+```bash
+npm run dev     # local dev server
+npm run build   # production build (needs network access to Google Fonts)
+npm run lint
+npx tsc --noEmit  # type check without building
+```
+
+### Environment variables (`.env.local`, never committed)
+| Var | Purpose |
+|-----|---------|
+| `RESEND_API_KEY` | Resend API key |
+| `CONTACT_EMAIL` | Where contact form enquiries are sent (required; route returns 500 without it) |
+| `RESEND_FROM` | Optional sender, defaults to `Hoshida Dispatch <onboarding@resend.dev>` |
+
+---
+
+## File Structure
+
+```
+app/
+  layout.tsx              root layout, fonts, site metadata
+  globals.css             Tailwind base + custom keyframes (fadeUp, scroll-strip, pulse-dot)
+  page.tsx                Homepage
+  teachers/page.tsx       Teachers page
+  schools/page.tsx        For Schools page (hero, features, process, pricing, testimonials, CTA)
+  parent-hub/page.tsx     Parent Hub (static, noindex)
+  api/contact/route.ts    Contact form POST handler (Resend)
+components/
+  layout/Nav.tsx          'use client' — sticky frosted nav, mobile menu, active link
+  layout/Footer.tsx       dark ink footer, 4 columns
+  sections/               page sections; client components where interactive
+    ContactForm.tsx       'use client'
+    SchoolEmailForm.tsx   'use client'
+    FaqAccordion.tsx      'use client'
+    TeacherCards.tsx      'use client' — reads data/teachers.ts
+    PhotoStrip.tsx        'use client' — auto-scrolling photo strip (homepage)
+  ui/Button.tsx           typed Button (link or button), variants + sizes
+data/
+  teachers.ts             Teacher type + records (Brandon, Remon, Satoko)
+public/images/            all site photos
+plans/                    per-page build plans + previous session summary
+memory/                   older project notes
+*.html (repo root)        LEGACY static HTML prototypes — design reference only
+```
+
+**The `.html` files in the repo root are the original static prototypes.** Don't edit them or build features in them. The Next.js app in `app/` and `components/` is the source of truth.
 
 ---
 
 ## Pages
 
-| File | Page | Status |
-|------|------|--------|
-| `hoshida-homepage.html` | Homepage | Draft — content and layout finalised |
-| `hoshida-teachers.html` | Teachers page | Draft — sticky panel + scroll cards |
-| `hoshida-schools.html` | For Schools page | Draft — content and layout finalised |
-| `parent-hub-v2.html` | Parent Hub | Draft v2 — final design direction |
-| `parent-news-schedule.html` | Parent Hub v1 | **Deprecated** — early exploration with a different visual style (Nunito/Baloo, blue palette). Kept for reference only. Do not build from this. |
+| Route | File | Notes |
+|-------|------|-------|
+| `/` | `app/page.tsx` | Hero, photo strip, offer, Montessori philosophy, FAQ, contact form |
+| `/teachers` | `app/teachers/page.tsx` | Hero, teaching style, teacher cards, "students first", CTA + contact form |
+| `/schools` | `app/schools/page.tsx` | Features, what you get, process, pricing, testimonials, inline email CTA |
+| `/parent-hub` | `app/parent-hub/page.tsx` | News & announcements, lesson schedule, what they're learning, contact. Pure server component. `robots: noindex` |
 
----
+Nav links: Home, Teachers, Schools, Parent Hub. Only the **Apply** CTA is shown (Log in was removed).
 
-## Site Architecture
-
-### Public marketing pages (hoshida-homepage, hoshida-teachers, hoshida-schools)
-These share a nav, footer, and design system. They target **school administrators** considering hiring Hoshida for English instruction.
-
-### Parent Hub (parent-hub-v2)
-A section for **parents of enrolled children**. It provides dispatch information: weekly bus schedules, service announcements, route status, and quick contacts. It uses the shared `<Nav />` and `<Footer />` from the marketing pages, plus the same design system (fonts, colours, module patterns). The inner content uses a dashboard-style 2-column module grid rather than the marketing page section layout.
+### Parent Hub scope
+The parent hub is about **lessons**, not buses. Bus routes, route status, driver contacts and the day-selector schedule from the old prototype were deliberately removed (see `plans/parent-hub-plan.md`). Don't bring them back.
 
 ---
 
 ## Design System
 
-### Fonts
-- **Headings:** DM Serif Display (serif, includes italic)
-- **Body:** DM Sans (weights: 300, 400, 500, 600, 700)
-- Loaded from Google Fonts
+Use the Tailwind tokens. Don't hardcode hex values when a token exists.
 
-### Colour Palette
-```
---cream:        #FAEDCA    (page background)
---cream-dark:   #F0DCA8    (borders, subtle backgrounds)
---cream-deeper: #E8CF90    (used in parent hub for pip accents)
---indigo:       #6C7DE2    (primary accent, CTAs)
---indigo-light: #EEF0FC    (tags, light backgrounds)
---indigo-dark:  #4A5BC4    (hover states)
---terra:        #E18F64    (secondary accent, italic headings, alerts)
---terra-light:  #FAE8DC    (light terra backgrounds)
---terra-dark:   #C46F44    (hover states)
---ink:          #2B2D42    (dark backgrounds, body text)
---muted:        #7A7D95    (secondary text, labels)
---white:        #FFFDF7    (card backgrounds)
---grey:         #D0D0D0    (image placeholders)
---grey-border:  #BEBEBE    (placeholder borders)
-```
+| Token | Hex | Use |
+|-------|-----|-----|
+| `cream` | #FAEDCA | page background |
+| `cream-dark` | #F0DCA8 | borders |
+| `cream-deeper` | #E8CF90 | pip accents |
+| `indigo` / `-light` / `-dark` | #6C7DE2 / #EEF0FC / #4A5BC4 | primary accent, CTAs, card backgrounds, hover |
+| `terra` / `-light` / `-dark` | #E18F64 / #FAE8DC / #C46F44 | secondary accent, italic headings |
+| `ink` | #2B2D42 | dark sections, body text |
+| `muted` | #7A7D95 | secondary text |
+| `white` | #FFFDF7 | card backgrounds (note: overrides Tailwind's pure white) |
 
-### Layout Patterns
-- **Max width:** 1400px, centred with `5vw` side padding (marketing pages). Parent hub uses `96vw` max width.
-- **Border radius:** 16px (`var(--r)`)
-- **Card borders:** 1.5px solid `var(--cream-dark)`
-- **Grid gap:** 16px
-- **Module system:** `.mod` base class with colour variants (`.mod-cream`, `.mod-indigo`, `.mod-terra`, `.mod-ink`)
-- **Label style:** `.mod-label` — tiny uppercase with a short line `::before`
-
-### Component Conventions
-- **Buttons:** `.btn` base + variants (`.btn-primary`, `.btn-terra`, `.btn-ghost`, `.btn-ink`, `.btn-cream`, `.btn-outline-white`). All use `border-radius: 50px`.
-- **Section structure:** `.section` → `.section-inner` → `.section-head` + `.grid`
-- **Grid classes:** `.g2`, `.g3`, `.g4` for column counts
-
-### Image Placeholders
-All images currently use flat grey placeholder boxes (`background: var(--grey); border: 1.5px solid var(--grey-border)`). These will be replaced with real photos.
+**Layout conventions**
+- `max-w-site` (1400px), sections use `px-[5vw]`, bottom spacing `pb-[60px]`
+- Radius: `rounded-[16px]` / `rounded-card` for cards, `rounded-pill` for buttons
+- Card borders: `border border-cream-dark`
+- Grid gap: `gap-4` (16px)
+- Cards that sit on the cream background use `bg-indigo-light` (not `bg-cream`, which disappears into the page)
+- Entrance animation: `animate-fade-up`
 
 ---
 
-## Shared Components
+## Images
 
-### Navigation (marketing pages only)
-Sticky nav with frosted glass background (`rgba(250,237,202,0.95)` + `backdrop-filter: blur(10px)`). Links: Home, Teachers, Schools, Parent Hub. CTA buttons: Log in (ghost), Apply (primary). Logo: "Hoshida Dispatch" with a terra-coloured dot.
-
-### Footer (marketing pages only)
-Dark (`--ink`) footer with 4-column layout: Brand, For Schools, Company, Contact. Legal links at bottom.
-
-### Parent Hub
-Has its own self-contained layout. No shared nav or footer with the marketing pages. Includes:
-- **Page header** with title and a live status pill
-- **Alert banner** (dismissable, terra background) for urgent route changes
-- **News list** with colour-coded priority pips (urgent/reminder/update/info)
-- **Schedule module** with day selector and time-slot detail view
-- **Quick contacts** (dispatch office, driver, emergency line)
-- **Route status grid** showing all routes with on-time/delay indicators
+- All photos live in `public/images/` and are referenced as `/images/<file>`.
+- Photos use plain `<img>` with `object-cover` plus an `object-[x%_y%]` focal point, and an `{/* eslint-disable-next-line @next/next/no-img-element */}` comment above. Keep this pattern for consistency.
+- Before adding a photo: fix EXIF rotation, resize to max ~1600px on the long edge, save as JPEG (~80 quality), and **strip metadata (GPS)**. Aim for under ~300 KB.
+- Use descriptive lowercase-hyphen file names (e.g. `halloween-group-photo.jpg`).
+- After placing a photo, check the crop so faces aren't cut off at the box's aspect ratio.
+- Photos show real children. Don't put children's names in alt text or file names.
+- CSP only allows `img-src 'self' data: blob:`, so external image URLs will not load. Always add images to `public/images/`.
 
 ---
 
-## Key Interactions
+## Security (next.config.mjs)
 
-- **FAQ accordion** (homepage): Toggle `.faq-item.open` class, animates `max-height`
-- **Teacher scroll cards** (teachers page): `IntersectionObserver` activates cards as they scroll into view, updates a sticky side panel with teacher info and progress dots
-- **Schedule day selector** (parent hub): Click day buttons to swap schedule content via JS object lookup (`schedules` map keyed by day abbreviation)
-- **Alert dismiss** (parent hub): Removes alert banner element on click
-- **Auto-scrolling photo strip** (homepage): CSS `translateX` animation, pauses on hover
+Security headers apply to all routes: CSP, `X-Frame-Options: DENY`, HSTS, `nosniff`, a strict `Permissions-Policy`. If you add any external resource (script, font CDN, image host, API), you must update the CSP or it will be blocked.
+
+The contact route already has input validation, HTML escaping, a honeypot field (`website`) and an in-memory rate limit (3 per IP per minute). Keep these when changing it. The in-memory limiter doesn't share state across Vercel instances. Upgrade to Upstash if abuse becomes a problem.
 
 ---
 
-## What Needs Building
+## Working Agreement
 
-### Immediate
-- [ ] Rename all "KinderRide" references to "Hoshida Dispatch" or "Parent Hub"
-- [ ] Consolidate shared CSS into a single stylesheet (nav, footer, buttons, grid, modules, typography)
-- [ ] Extract shared nav and footer into reusable partials or components
-- [ ] Replace grey image placeholders with real photos
-- [ ] Add a Parent News page (linked from marketing nav)
-- [ ] Mobile responsiveness pass — current breakpoints are basic
+- **Plan first.** Write or update a plan in `plans/` and get approval before building a new page or large section.
+- **One page at a time.** Finish a page, then stop for review before starting the next.
+- **Copy is draft.** Mark uncertain copy with `{/* TODO: copy */}` rather than inventing claims.
+- **Mobile-first.** Check small screens for every change.
+- **Contact details:** don't add or change real email addresses or phone numbers unless told to.
+- **Changes go through a branch + PR**, not straight to `main` (main auto-deploys).
 
-### Future
-- [ ] Consider migrating to a static site generator (Astro, 11ty) for DRY templates
-- [ ] Add real interactivity to Parent Hub (live route data, authentication)
+---
+
+## Still To Do
+
+- [ ] Resources page
+- [ ] Parent News page
+- [ ] Replace remaining placeholder copy (parent hub news, testimonials)
+- [ ] Move photo `<img>` tags to `next/image` (optional, for automatic sizing)
+- [ ] SEO: Open Graph tags, favicon
 - [ ] Japanese language version (bilingual site)
-- [ ] SEO metadata, Open Graph tags, favicon
-
----
-
-## Code Style
-
-- **No build tools.** Files are self-contained HTML with `<style>` and `<script>` tags.
-- **Vanilla JS only.** No frameworks, no jQuery, no npm packages in the frontend.
-- **CSS custom properties** for all colours and shared values.
-- **BEM-ish naming** but not strict — classes are short and descriptive (`.mod-terra`, `.news-item`, `.card-bio`).
-- **Consistent spacing:** Marketing sections use `padding: 60px 5vw`. Grids use `gap: 16px`.
-
----
-
-## Important Context
-
-- **Hoshida Dispatch** is a real business. **Hoshida International School** is the parent organisation.
-- The target audiences are: (1) Japanese kindergartens considering hiring teachers (schools page), and (2) parents of children already using the dispatch service (parent hub).
-- Teacher profiles (Harlow, Tanaka, Okafor, Ellis) use placeholder data but represent the real team structure.
-- The Parent Hub covers dispatch logistics: bus routes, weekly schedules, driver contacts, service announcements. It is NOT a separate product — it is part of Hoshida Dispatch.
-- Contact info in the footer is placeholder. Do not expose real email/phone until told otherwise.
-- `parent-news-schedule.html` is an old design direction (different fonts, different colours). Do not reference it for design decisions. Use `parent-hub-v2.html` as the source of truth for the parent hub.
-
----
-
-## File Structure (target)
-
-```
-/
-├── index.html              (homepage)
-├── teachers.html
-├── schools.html
-├── resources.html          (to build)
-├── parent-news.html        (to build)
-├── parent-hub.html         (parent-facing dispatch hub)
-├── css/
-│   └── styles.css          (shared stylesheet — to extract)
-├── js/
-│   └── main.js             (shared interactions — to extract)
-├── assets/
-│   └── images/             (photos — to add)
-├── CLAUDE.md
-└── README.md
-```
+- [ ] Shared rate limiting for the contact route (if needed)

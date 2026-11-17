@@ -96,7 +96,7 @@ export default function TeachersPage() {
               {/* Photo */}
               <div className="rounded-[16px] overflow-hidden min-h-[380px] md:row-span-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/firetruck.PNG" alt="Students on a field trip" className="w-full h-full object-cover" />
+                <img src="/images/halloween-group-photo.jpg" alt="Teacher and students in Halloween costumes" className="w-full h-full object-cover object-[50%_35%]" />
               </div>
               {/* Point 1 */}
               <div className="rounded-[16px] border border-cream-dark bg-white p-7">
@@ -167,11 +167,11 @@ export default function TeachersPage() {
               <div className="flex flex-col gap-4">
                 <div className="h-[260px] w-full overflow-hidden rounded-[16px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/Harry.png" alt="Young student" className="h-full w-full object-cover object-[50%_30%]" />
+                  <img src="/images/halloween-teacher-puzzle.jpg" alt="Teacher helping a student with a puzzle at the Halloween party" className="h-full w-full object-cover object-[50%_33%]" />
                 </div>
                 <div className="h-[260px] w-full overflow-hidden rounded-[16px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/exercise-park.jpg" alt="Children playing at the park" className="h-full w-full object-cover object-[50%_40%]" />
+                  <img src="/images/halloween-trick-or-treat.jpg" alt="Student in a ghost costume trick-or-treating with a teacher" className="h-full w-full object-cover object-[65%_30%]" />
                 </div>
                 <div className="h-[260px] w-full overflow-hidden rounded-[16px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -234,7 +234,7 @@ export default function Home() {
               {/* Photo */}
               <div className="h-[280px] w-full overflow-hidden rounded-[16px]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/pe.PNG" alt="Students in PE class" className="h-full w-full object-cover object-center" />
+                <img src="/images/halloween-blindfold-game.jpg" alt="Blindfolded students playing a matching game at the Halloween party" className="h-full w-full object-cover object-[50%_45%]" />
               </div>
               {/* Point 1 */}
               <div className="rounded-[16px] border border-indigo-dark bg-indigo p-7">
@@ -246,7 +246,7 @@ export default function Home() {
               {/* Photo */}
               <div className="h-[280px] w-full overflow-hidden rounded-[16px]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/exercise-park.jpg" alt="Children at the park" className="h-full w-full object-cover object-[50%_30%]" />
+                <img src="/images/halloween-spider-game.jpg" alt="Students using tongs to pick spiders out of a web game" className="h-full w-full object-cover object-[50%_45%]" />
               </div>
               {/* Point 2 */}
               <div className="rounded-[16px] border border-indigo-dark bg-indigo p-7">
